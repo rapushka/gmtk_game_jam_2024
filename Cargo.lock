@@ -701,14 +701,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bevy_github_ci_template"
-version = "0.1.0"
-dependencies = [
- "bevy",
- "bevy_editor_pls",
-]
-
-[[package]]
 name = "bevy_gizmos"
 version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2314,6 +2306,14 @@ dependencies = [
  "ab_glyph",
  "approx",
  "xi-unicode",
+]
+
+[[package]]
+name = "gmtk_game_jam_2024"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_editor_pls",
 ]
 
 [[package]]
