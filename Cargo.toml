@@ -17,3 +17,7 @@ opt-level = 3
 
 [dependencies]
 bevy = "0.14"
+bevy_editor_pls = "0.9"
+
+[dev-dependencies]
+bevy = { version = "0.14.1", features = ["dynamic_linking"] }
