@@ -2313,6 +2313,7 @@ name = "gmtk_game_jam_2024"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "bevy-inspector-egui",
  "bevy_editor_pls",
 ]
 
