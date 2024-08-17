@@ -1,5 +1,6 @@
 use bevy::sprite::Anchor::BottomCenter;
 use crate::gameplay::character::Character;
+use crate::gameplay::health::components::Health;
 use crate::prelude::*;
 
 pub struct EnemiesPlugin;
@@ -21,6 +22,10 @@ fn spawn_enemy_on_character_spawned(
     let entity = trigger.entity();
 
     commands.spawn_with_name("rat")
+        .insert(StateScoped(AppState::in_gameplay()))
+        .insert(UnitBundle {
+            health: Health(balance::RAT_HEALTH),
+        })
         .set_parent(entity)
         .insert(SpriteBundle {
             texture: sprite_handle,

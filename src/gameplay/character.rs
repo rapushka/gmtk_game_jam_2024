@@ -1,4 +1,5 @@
 use bevy::sprite::Anchor;
+use crate::gameplay::health::components::Health;
 use crate::prelude::*;
 use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
 
@@ -24,6 +25,10 @@ fn spawn_character(
     let sprite_handle = assets.bouncer.clone();
     let character = commands.spawn_with_name("character_bouncer")
         .insert(Character)
+        .insert(StateScoped(AppState::in_gameplay()))
+        .insert(UnitBundle {
+            health: Health(balance::BOUNCER_HEALTH),
+        })
         .insert(SpriteBundle {
             texture: sprite_handle,
             sprite: Sprite {
