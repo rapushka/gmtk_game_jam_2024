@@ -1,3 +1,4 @@
+use bevy::winit::WinitSettings;
 use crate::gameplay::GameplayPlugin;
 use crate::infrastructure::InfrastructurePlugin;
 use crate::prelude::*;
@@ -17,6 +18,8 @@ pub struct GamePlugin;
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
+            .insert_resource(WinitSettings::desktop_app())
+
             .add_plugins((
                 ToolsPlugin,
 
