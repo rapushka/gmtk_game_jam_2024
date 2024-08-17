@@ -2,9 +2,15 @@
 
 use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
+use crate::debug::DebugPlugin;
+
+mod prelude;
+mod player;
+mod debug;
 
 fn main() {
     App::new()
+        .add_plugins(DebugPlugin)
         .add_plugins(DefaultPlugins.set(AssetPlugin {
             meta_check: AssetMetaCheck::Never,
             ..default()
