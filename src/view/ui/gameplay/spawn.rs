@@ -30,66 +30,54 @@ pub fn spawn_gameplay_hud(
                 })
             ;
 
-            root
-                .spawn_with_name("deck panel")
-                .insert(NodeBundle {
+            spawn_deck_panel(sprite_handle, root);
+        })
+    ;
+}
+
+fn spawn_deck_panel(sprite_handle: Handle<Image>, root: &mut ChildBuilder) {
+    root
+        .spawn_with_name("deck panel")
+        .insert(NodeBundle {
+            style: Style {
+                flex_direction: FlexDirection::Column,
+                justify_content: JustifyContent::End,
+                align_items: AlignItems::End,
+
+                height: Val::Percent(100.0),
+                width: Val::Px(350.0),
+
+                padding: UiRect::all(Val::Px(20.0)),
+
+                ..default()
+            },
+            ..default()
+        })
+        .with_children(|right_dock| {
+            right_dock
+                .spawn_with_name("background")
+                .insert(ImageBundle {
                     style: Style {
-                        // align_self: AlignSelf::End,
-                        flex_direction: FlexDirection::Column,
-                        justify_content: JustifyContent::End,
-                        align_items: AlignItems::End,
-    
+                        width: Val::Percent(100.0),
                         height: Val::Percent(100.0),
-                        width: Val::Px(300.0),
-
-                        padding: UiRect::all(Val::Px(20.0)),
-
                         ..default()
                     },
+                    image: UiImage::new(sprite_handle).with_color(colors::background()),
                     ..default()
                 })
-                .with_children(|right_dock| {
-                    right_dock
-                        .spawn_with_name("background")
-                        .insert(ImageBundle {
-                            style: Style {
-                                width: Val::Percent(100.0),
-                                height: Val::Percent(100.0),
-                                ..default()
-                            },
-                            image: UiImage::new(sprite_handle),
-                            ..default()
-                        })
-                        .insert(ImageScaleMode::Sliced(TextureSlicer {
-                            border: BorderRect::square(15.0),
-                            center_scale_mode: SliceScaleMode::Stretch,
-                            sides_scale_mode: SliceScaleMode::Stretch,
-                            max_corner_scale: 1.0,
-                        }))
-                    ;
-                })
+                .insert(ImageScaleMode::Sliced(TextureSlicer {
+                    border: BorderRect::square(15.0),
+                    center_scale_mode: SliceScaleMode::Stretch,
+                    sides_scale_mode: SliceScaleMode::Stretch,
+                    max_corner_scale: 1.0,
+                }))
             ;
         })
     ;
 }
 
-fn panel_style() -> Style {
-    Style {
-        align_self: AlignSelf::End,
-
-        left: Val::Px(20.0),
-        top: Val::Px(20.0),
-        right: Val::Px(20.0),
-        bottom: Val::Px(20.0),
-
-        width: Val::Px(300.0),
-        height: Val::Auto,
-        ..default()
-    }
-}
-
 // TODO: REMOVE ME
-fn spawn_deck_panel(
+fn old_spawn_deck_panel(
     mut commands: Commands,
 ) {
     commands
