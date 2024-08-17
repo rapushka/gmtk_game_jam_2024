@@ -1,12 +1,15 @@
-#[cfg(debug_assertions)]
-use crate::debug::DebugPlugin;
+use crate::gameplay::GameplayPlugin;
+use crate::infrastructure::InfrastructurePlugin;
 use crate::prelude::*;
 use crate::tools::ToolsPlugin;
+use crate::view::ViewPlugin;
 
-mod debug;
 mod prelude;
 mod player;
 mod tools;
+mod gameplay;
+mod view;
+mod infrastructure;
 
 pub struct GamePlugin;
 
@@ -15,9 +18,11 @@ impl Plugin for GamePlugin {
         app
             .add_plugins((
                 ToolsPlugin,
-                #[cfg(debug_assertions)] {
-                    DebugPlugin
-                },
+
+                // --- 
+                ViewPlugin,
+                InfrastructurePlugin,
+                GameplayPlugin,
             ))
             .add_systems(Startup, setup)
         ;
@@ -25,10 +30,8 @@ impl Plugin for GamePlugin {
 }
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(Camera2dBundle::default());
     commands.spawn(SpriteBundle {
         texture: asset_server.load("ducky.png"),
         ..Default::default()
     });
 }
-
