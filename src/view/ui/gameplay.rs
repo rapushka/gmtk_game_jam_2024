@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::view::ui::gameplay::spawn::spawn_gameplay_hud;
 
-pub(crate) mod spawn;
+pub mod spawn;
 
 #[derive(Component)]
 pub struct AutoPlayButton;
