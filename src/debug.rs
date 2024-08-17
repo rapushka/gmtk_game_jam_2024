@@ -1,3 +1,5 @@
+#![cfg(debug_assertions)]
+
 use bevy_editor_pls::EditorPlugin;
 use crate::prelude::*;
 
