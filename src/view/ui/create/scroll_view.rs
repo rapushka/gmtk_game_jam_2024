@@ -9,8 +9,14 @@ pub fn list_view<C: Component>(
         .spawn_with_name("list view")
         .insert(NodeBundle {
             style: Style {
-                flex_direction: FlexDirection::Column,
+                flex_direction: FlexDirection::ColumnReverse,
                 align_self: AlignSelf::Stretch,
+                align_items: AlignItems::Stretch,
+
+                justify_items: JustifyItems::Start,
+                align_content: AlignContent::End,
+                justify_content: JustifyContent::End,
+
                 height,
                 overflow: Overflow::clip_y(),
                 ..default()
@@ -18,20 +24,6 @@ pub fn list_view<C: Component>(
             background_color: colors::background().into(),
             ..default()
         })
-        .with_children(|list_view| {
-            list_view
-                .spawn_with_name("moving panel")
-                .insert((
-                    NodeBundle {
-                        style: Style {
-                            flex_direction: FlexDirection::Column,
-                            align_items: AlignItems::Center,
-                            ..default()
-                        },
-                        ..default()
-                    },
-                ))
-                .insert(component)
-            ;
-        });
+        .insert(component)
+    ;
 }

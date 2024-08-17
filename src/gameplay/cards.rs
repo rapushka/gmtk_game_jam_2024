@@ -26,11 +26,9 @@ impl Plugin for CardsPlugin {
 fn test_cards_spawn(
     mut commands: Commands,
 ) {
-    commands.trigger(SpawnCard { name: "attack".to_string() });
-    commands.trigger(SpawnCard { name: "attack".to_string() });
-    commands.trigger(SpawnCard { name: "attack".to_string() });
-    commands.trigger(SpawnCard { name: "attack".to_string() });
-    commands.trigger(SpawnCard { name: "attack".to_string() });
-
-    info!("--- events sent")
+    commands.trigger(SpawnCard { name: "attack1".to_string() });
+    commands.trigger(SpawnCard { name: "attack2".to_string() });
+    commands.trigger(SpawnCard { name: "attack3".to_string() });
+    commands.trigger(SpawnCard { name: "attack4".to_string() });
+    commands.trigger(SpawnCard { name: "attack5".to_string() });
 }

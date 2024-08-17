@@ -13,8 +13,6 @@ pub fn spawn_card(
     assets: Res<UiAssets>,
     deck_root: Query<Entity, With<DeckRoot>>,
 ) {
-    info!("--- event received");
-    
     for root in deck_root.iter() {
         let name = trigger.event().name.clone();
 
@@ -23,6 +21,16 @@ pub fn spawn_card(
             .insert(Card)
             .insert(NodeBundle {
                 background_color: colors::card_background_color().into(),
+                style: Style {
+                    justify_content: JustifyContent::Center,
+                    align_content: AlignContent::Center,
+                    align_items: AlignItems::Center,
+                    
+                    padding: UiRect::all(Val::Px(5.0)),
+                    margin: UiRect::all(Val::Px(5.0)),
+                    
+                    ..default()
+                },
                 ..default()
             })
             .with_children(|item| {
