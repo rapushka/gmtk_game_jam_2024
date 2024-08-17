@@ -14,10 +14,10 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins((
+                ToolsPlugin,
                 #[cfg(debug_assertions)] {
                     DebugPlugin
                 },
-                ToolsPlugin,
             ))
             .add_systems(Startup, setup)
         ;
