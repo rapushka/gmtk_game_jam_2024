@@ -1,7 +1,7 @@
 use bevy::a11y::accesskit::Role::Math;
 use bevy::prelude::{Commands, Query, Trigger};
 use crate::gameplay::health::death::Died;
-use crate::prelude::Event;
+use crate::prelude::{Event, Health};
 
 #[derive(Event)]
 pub struct Heal(pub u8);
@@ -33,7 +33,7 @@ pub fn on_damage_taken(
 pub fn change_health(
     trigger: Trigger<ChangeHealth>,
     mut commands: Commands,
-    mut entities: Query<&mut Heal>,
+    mut entities: Query<&mut Health>,
 ) {
     let target = trigger.entity();
     let mut health = entities.get_mut(target)
