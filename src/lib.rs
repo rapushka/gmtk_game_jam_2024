@@ -1,3 +1,4 @@
+#[cfg(debug_assertions)]
 use crate::debug::DebugPlugin;
 use crate::prelude::*;
 use crate::tools::ToolsPlugin;
