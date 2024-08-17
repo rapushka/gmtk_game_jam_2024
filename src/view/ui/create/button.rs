@@ -1,8 +1,8 @@
-use crate::prelude::{AssetServer, BuildChildren, ButtonBundle, ChildBuilder, colors, Component, default, ImageBundle, Res, Style, styles, UiImage, Val};
+use crate::prelude::*;
 use crate::view::ui::create;
 
 pub fn button<C>(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     parent: &mut ChildBuilder,
     string: String,
     component: C,
@@ -10,11 +10,11 @@ pub fn button<C>(
 where
     C: Component,
 {
-    button_internal(asset_server, parent, string, component, styles::BUTTON);
+    button_internal(font, parent, string, component, styles::BUTTON);
 }
 
 pub fn small_button<C>(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     parent: &mut ChildBuilder,
     string: String,
     component: C,
@@ -22,11 +22,11 @@ pub fn small_button<C>(
 where
     C: Component,
 {
-    button_internal(asset_server, parent, string, component, styles::SMALL_BUTTON);
+    button_internal(font, parent, string, component, styles::SMALL_BUTTON);
 }
 
 fn button_internal<C>(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     parent: &mut ChildBuilder,
     string: String,
     component: C,
@@ -43,7 +43,7 @@ fn button_internal<C>(
         },
     ))
         .with_children(|parent| {
-            create::light_text(asset_server, string, parent, 32.0);
+            create::light_text(font, string, parent, 32.0);
         });
 }
 

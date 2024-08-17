@@ -3,6 +3,9 @@ use crate::view::ui::gameplay::spawn::spawn_gameplay_hud;
 
 mod spawn;
 
+#[derive(Component)]
+pub struct AutoPlayButton;
+
 pub struct GameplayUiPlugin;
 
 impl Plugin for GameplayUiPlugin {

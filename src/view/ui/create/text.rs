@@ -1,56 +1,56 @@
-use crate::prelude::{AssetServer, BuildChildren, ChildBuilder, Color, colors, CommandsExt, default, JustifyText, NodeBundle, Res, styles, Text, TextBundle, TextSection, TextStyle};
+use crate::prelude::*;
 
 pub fn title(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     parent: &mut ChildBuilder,
     title_text: String,
 ) {
     parent.spawn(NodeBundle { style: styles::TITLE, ..default() })
         .with_children(|parent| {
-            light_text(asset_server, title_text, parent, 64.0);
+            light_text(font, title_text, parent, 64.0);
         });
 }
 
 pub fn text(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     text: String,
     parent: &mut ChildBuilder,
     font_size: f32,
 ) {
     parent
         .spawn_with_name(&format!("text: {text}"))
-        .insert(text_bundle(asset_server, text, font_size));
+        .insert(text_bundle(font, text, font_size));
 }
 
 pub fn light_text(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     text: String,
     parent: &mut ChildBuilder,
     font_size: f32,
 ) {
     parent
         .spawn_with_name(&format!("text: {text}"))
-        .insert(light_text_bundle(asset_server, text, font_size));
+        .insert(light_text_bundle(font, text, font_size));
 }
 
 pub fn text_bundle(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     text: String,
     font_size: f32,
 ) -> TextBundle {
-    colored_text_bundle(asset_server, text, font_size, colors::default_text())
+    colored_text_bundle(font, text, font_size, colors::default_text())
 }
 
 pub fn light_text_bundle(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     text: String,
     font_size: f32,
 ) -> TextBundle {
-    colored_text_bundle(asset_server, text, font_size, colors::light_text())
+    colored_text_bundle(font, text, font_size, colors::light_text())
 }
 
 fn colored_text_bundle(
-    asset_server: &Res<AssetServer>,
+    font: Handle<Font>,
     text: String,
     font_size: f32,
     color: Color,
@@ -61,7 +61,7 @@ fn colored_text_bundle(
                 TextSection::new(
                     text,
                     TextStyle {
-                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                        font,
                         font_size,
                         color,
                     },

@@ -1,0 +1,1 @@
+pub const DECK_PANEL_WIDTH: f32 = 350.0;

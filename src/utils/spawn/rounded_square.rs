@@ -25,7 +25,7 @@ impl Default for SpawnRoundedRectCommand {
 
 impl Command for SpawnRoundedRectCommand {
     fn apply(self, world: &mut World) {
-        let assets = world.resource::<CommonAssets>();
+        let assets = world.resource::<UiAssets>();
         let sprite_handle = assets.rounded_square.clone();
 
         let z_position = if self.is_under_parent { -1.0 } else { 1.0 };

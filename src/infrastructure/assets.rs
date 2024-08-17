@@ -8,7 +8,7 @@ impl Plugin for AssetLoadingPlugin {
         app
             .add_loading_state(
                 LoadingState::new(AppState::Bootstrap)
-                    .load_collection::<CommonAssets>()
+                    .load_collection::<UiAssets>()
                     .load_collection::<CharacterAssets>()
                     .load_collection::<EnemyAssets>()
                     .continue_to_state(AppState::MainMenu)
@@ -18,9 +18,12 @@ impl Plugin for AssetLoadingPlugin {
 }
 
 #[derive(AssetCollection, Resource)]
-pub struct CommonAssets {
+pub struct UiAssets {
     #[asset(path = "common/rounded_square.png")]
     pub rounded_square: Handle<Image>,
+
+    #[asset(path = "fonts/FiraSans-Bold.ttf")]
+    pub font: Handle<Font>,
 }
 
 #[derive(AssetCollection, Resource)]
