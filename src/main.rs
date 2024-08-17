@@ -6,7 +6,6 @@ use crate::debug::DebugPlugin;
 
 mod prelude;
 mod player;
-mod debug;
 
 fn main() {
     App::new()

@@ -15,10 +15,8 @@ bevy = "0.14"
 bevy_asset_loader = { version = "0.21", features = ["2d"] }
 
 [dev-dependencies]
+bevy_editor_pls = { version = "0.9" }
 bevy = { version = "0.14", features = ["dynamic_linking"] }
 
 [workspace]
 resolver = "2"
-
-[target.'cfg(debug_assertions)'.dependencies]
-bevy-inspector-egui = "0.25"

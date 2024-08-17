@@ -1,4 +1,4 @@
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_editor_pls::EditorPlugin;
 use crate::prelude::*;
 
 pub struct DebugPlugin;
@@ -7,7 +7,7 @@ impl Plugin for DebugPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins((
-                WorldInspectorPlugin::default(),
+                EditorPlugin::default(),
             ))
         ;
     }
