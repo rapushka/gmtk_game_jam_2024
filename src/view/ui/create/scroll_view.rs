@@ -31,21 +31,6 @@ pub fn list_view<C: Component>(
                         ..default()
                     },
                 ))
-                // .with_children(|parent| {
-                //     // List items
-                //     for i in 0..30 {
-                //         parent.spawn((
-                //             TextBundle::from_section(
-                //                 format!("Item {i}"),
-                //                 TextStyle {
-                //                     font,
-                //                     ..default()
-                //                 },
-                //             ),
-                //             Label,
-                //         ));
-                //     }
-                // })
                 .insert(component)
             ;
         });
