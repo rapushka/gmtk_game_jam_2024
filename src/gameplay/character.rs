@@ -1,5 +1,6 @@
 use bevy::sprite::Anchor;
 use crate::gameplay::health::components::Health;
+use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
 use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
 
@@ -28,6 +29,7 @@ fn spawn_character(
         .insert(StateScoped(AppState::in_gameplay()))
         .insert(UnitBundle {
             health: Health(balance::BOUNCER_HEALTH),
+            health_bar_offset: HealthBarOffset(view::CHARACTER_HEALTH_BAR_OFFSET),
         })
         .insert(SpriteBundle {
             texture: sprite_handle,

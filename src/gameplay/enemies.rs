@@ -1,6 +1,7 @@
 use bevy::sprite::Anchor::BottomCenter;
 use crate::gameplay::character::Character;
 use crate::gameplay::health::components::Health;
+use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
 
 pub struct EnemiesPlugin;
@@ -25,6 +26,7 @@ fn spawn_enemy_on_character_spawned(
         .insert(StateScoped(AppState::in_gameplay()))
         .insert(UnitBundle {
             health: Health(balance::RAT_HEALTH),
+            health_bar_offset: HealthBarOffset(view::ENEMY_HEALTH_BAR_OFFSET),
         })
         .set_parent(entity)
         .insert(SpriteBundle {

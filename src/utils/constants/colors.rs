@@ -11,6 +11,7 @@ pub fn light_text() -> Color { from_hex("d2d2d2") }
 pub fn background() -> Color { from_hex("5a4e44") }
 
 pub fn card_background_color() -> Color { from_hex("987a") }
+pub fn health_color() -> Color { from_hex("e44a41") }
 
 fn from_hex(value: &'static str) -> Color { Srgba::hex(value).unwrap().into() }
 
