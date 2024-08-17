@@ -1,6 +1,5 @@
-use bevy::math::vec2;
 use crate::prelude::*;
-use crate::utils::spawn::rounded_square::SpawnRoundedRectCommand;
+use crate::utils::spawn::rounded_square::*;
 
 pub struct CardsPlugin;
 
@@ -14,7 +13,18 @@ impl Plugin for CardsPlugin {
 
 fn spawn_deck_panel(
     mut commands: Commands,
+    assets: Res<CommonAssets>,
 ) {
+    commands
+        .spawn_with_name("gameplay HUD")
+        .insert(NodeBundle {
+            ..default()
+        })
+        .with_children(|parent| {
+            parent.spawn_with_name("background");
+        });
+
+    // ---
     let panel = commands
         .spawn_with_name("deck panel")
         .insert(StateScoped(AppState::in_gameplay()))

@@ -2,6 +2,7 @@ use crate::prelude::*;
 use self::camera::*;
 
 mod camera;
+pub mod ui;
 
 pub struct ViewPlugin;
 

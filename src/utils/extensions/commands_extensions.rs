@@ -10,3 +10,9 @@ impl CommandsExt for Commands<'_, '_> {
         self.spawn(Name::from(name))
     }
 }
+
+impl CommandsExt for ChildBuilder<'_> {
+    fn spawn_with_name(&mut self, name: &str) -> EntityCommands {
+        self.spawn(Name::from(name))
+    }
+}
