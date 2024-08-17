@@ -10,6 +10,7 @@ mod tools;
 mod gameplay;
 mod view;
 mod infrastructure;
+mod utils;
 
 pub struct GamePlugin;
 
