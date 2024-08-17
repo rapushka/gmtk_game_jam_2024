@@ -2,6 +2,8 @@
 use bevy_editor_pls::EditorPlugin;
 use crate::prelude::*;
 
+type AppStateTransition = StateTransitionEvent<AppState>;
+
 pub struct DebugPlugin;
 
 impl Plugin for DebugPlugin {
@@ -11,7 +13,15 @@ impl Plugin for DebugPlugin {
                 #[cfg(debug_assertions)]
                 EditorPlugin::default(),
             ))
+
+            .add_systems(Update, log_state_transition.run_if(on_event::<AppStateTransition>()))
         ;
     }
 }
-
+fn log_state_transition(
+    mut event: EventReader<AppStateTransition>,
+) {
+    for event in event.read() {
+        info!("state transition: {:?} -> {:?}", event.exited, event.entered);
+    }
+}

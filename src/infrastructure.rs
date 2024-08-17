@@ -1,15 +1,23 @@
+use crate::infrastructure::app_state::InGameplay;
+use crate::infrastructure::assets::AssetLoadingPlugin;
 use crate::prelude::*;
 
 pub mod app_state;
+pub mod assets;
 
 pub struct InfrastructurePlugin;
 
 impl Plugin for InfrastructurePlugin {
     fn build(&self, app: &mut App) {
         app
+            .enable_state_scoped_entities::<AppState>()
+            .enable_state_scoped_entities::<InGameplay>()
             .init_state::<AppState>()
+            .add_computed_state::<InGameplay>()
 
-            .add_systems(OnEnter(AppState::Bootstrap), skip_to_gameplay)
+            .add_plugins(AssetLoadingPlugin)
+            
+            .add_systems(OnEnter(AppState::MainMenu), skip_to_gameplay)
         ;
     }
 }

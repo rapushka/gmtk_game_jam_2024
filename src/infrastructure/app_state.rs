@@ -14,6 +14,10 @@ impl AppState {
     pub fn start_gameplay() -> Self {
         Self::Gameplay { paused: false }
     }
+
+    pub fn in_gameplay() -> InGameplay {
+        InGameplay
+    }
 }
 
 #[derive(Clone, PartialEq, Eq, Hash, Debug)]

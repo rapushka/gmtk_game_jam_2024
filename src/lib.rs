@@ -25,14 +25,6 @@ impl Plugin for GamePlugin {
                 InfrastructurePlugin,
                 GameplayPlugin,
             ))
-            .add_systems(Startup, setup)
         ;
     }
-}
-
-fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(SpriteBundle {
-        texture: asset_server.load("ducky.png"),
-        ..Default::default()
-    });
 }
