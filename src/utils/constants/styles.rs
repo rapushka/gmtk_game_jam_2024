@@ -59,9 +59,11 @@ pub const SPEECH_BUBBLE: Style = {
 pub const BUTTON: Style = {
     let mut style = Style::DEFAULT;
     style.justify_content = JustifyContent::Center;
+    style.align_self = AlignSelf::Center;
     style.align_items = AlignItems::Center;
     style.width = Val::Px(200.0);
-    style.height = Val::Px(80.0);
+    style.height = Val::Px(50.0);
+    style.margin = UiRect::all(Val::Px(20.0));
     style
 };
 
