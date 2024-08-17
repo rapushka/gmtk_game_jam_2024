@@ -5,7 +5,7 @@ use crate::prelude::*;
 
 mod character;
 mod enemies;
-mod cards;
+pub mod cards;
 
 pub struct GameplayPlugin;
 

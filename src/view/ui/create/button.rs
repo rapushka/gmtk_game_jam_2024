@@ -34,14 +34,16 @@ fn button_internal<C>(
 ) where
     C: Component,
 {
-    parent.spawn((
-        component,
-        ButtonBundle {
-            style,
-            background_color: colors::default_button().into(),
-            ..default()
-        },
-    ))
+    parent
+        .spawn_with_name("button")
+        .insert((
+            component,
+            ButtonBundle {
+                style,
+                background_color: colors::default_button().into(),
+                ..default()
+            },
+        ))
         .with_children(|parent| {
             create::light_text(font, string, parent, 32.0);
         });

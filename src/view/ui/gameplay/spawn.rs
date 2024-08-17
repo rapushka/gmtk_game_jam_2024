@@ -1,6 +1,5 @@
-use bevy::ecs::system::EntityCommands;
+use crate::gameplay::cards::DeckRoot;
 use crate::prelude::*;
-use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
 use crate::view::ui::create;
 use crate::view::ui::gameplay::AutoPlayButton;
 
@@ -61,6 +60,8 @@ fn spawn_deck_panel(
         })
         .with_children(|right_dock| {
             panel(sprite_handle, right_dock, |panel| {
+                create::list_view(panel, DeckRoot, Val::Percent(75.0));
+
                 create::button(font, panel, "play".to_string(), AutoPlayButton);
             });
         })
@@ -79,7 +80,7 @@ fn panel(
                 flex_direction: FlexDirection::Column,
                 justify_content: JustifyContent::End,
                 align_items: AlignItems::End,
-                justify_items:JustifyItems::Center,
+                justify_items: JustifyItems::Center,
 
                 width: Val::Percent(100.0),
                 height: Val::Percent(100.0),
@@ -96,35 +97,4 @@ fn panel(
         }))
         .with_children(build_children)
     ;
-}
-
-// TODO: REMOVE ME
-fn old_spawn_deck_panel(
-    mut commands: Commands,
-) {
-    commands
-        .spawn_with_name("gameplay HUD")
-        .insert(NodeBundle {
-            ..default()
-        })
-        .with_children(|parent| {
-            parent.spawn_with_name("background");
-        });
-
-    // ---
-    let panel = commands
-        .spawn_with_name("deck panel")
-        .insert(StateScoped(AppState::in_gameplay()))
-        .insert(InheritedVisibility::default())
-        .insert(GlobalTransform::default())
-        .insert(Transform::from_xyz(455.0, 0.0, 100.0))
-        .id();
-
-    commands.add(SpawnRoundedRectCommand {
-        name: "Background",
-        parent: Some(panel),
-        color: Srgba::hex("5a4e44").unwrap().into(),
-        size: Vec2::new(350.0, 700.0),
-        ..default()
-    });
 }
