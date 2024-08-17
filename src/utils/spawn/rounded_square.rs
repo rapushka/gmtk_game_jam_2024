@@ -5,6 +5,7 @@ pub struct SpawnRoundedRectCommand {
     pub name: &'static str,
     pub size: Vec2,
     pub position: Vec2,
+    pub z: f32,
     pub color: Color,
     pub parent: Option<Entity>,
 }
@@ -15,6 +16,7 @@ impl Default for SpawnRoundedRectCommand {
             name: "rounded sprite",
             size: Vec2::new(64.0, 64.0),
             position: Vec2::ZERO,
+            z: -1.0,
             color: Srgba::WHITE.into(),
             parent: None,
         }
@@ -29,7 +31,7 @@ impl Command for SpawnRoundedRectCommand {
         let entity = world.spawn(Name::from(self.name))
             .insert(SpriteBundle {
                 texture: sprite_handle,
-                transform: Transform::from_translation(self.position.extend(0.0)),
+                transform: Transform::from_translation(self.position.extend(self.z)),
                 sprite: Sprite {
                     custom_size: Some(self.size),
                     color: self.color,
