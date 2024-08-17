@@ -10,6 +10,7 @@ impl Plugin for AssetLoadingPlugin {
                 LoadingState::new(AppState::Bootstrap)
                     .load_collection::<CommonAssets>()
                     .load_collection::<CharacterAssets>()
+                    .load_collection::<EnemyAssets>()
                     .continue_to_state(AppState::MainMenu)
             )
         ;
@@ -26,4 +27,10 @@ pub struct CommonAssets {
 pub struct CharacterAssets {
     #[asset(path = "characters/bouncer.png")]
     pub bouncer: Handle<Image>,
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct EnemyAssets {
+    #[asset(path = "enemies/rat.png")]
+    pub rat: Handle<Image>,
 }

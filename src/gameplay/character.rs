@@ -2,6 +2,9 @@ use bevy::sprite::Anchor;
 use crate::prelude::*;
 use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
 
+#[derive(Component)]
+pub struct Character;
+
 pub struct CharactersPlugin;
 
 impl Plugin for CharactersPlugin {
@@ -20,6 +23,7 @@ fn spawn_character(
 ) {
     let sprite_handle = assets.bouncer.clone();
     let character = commands.spawn_with_name("character_bouncer")
+        .insert(Character)
         .insert(SpriteBundle {
             texture: sprite_handle,
             sprite: Sprite {
