@@ -6,6 +6,7 @@ pub struct SpawnRoundedRectCommand {
     pub size: Vec2,
     pub position: Vec2,
     pub color: Color,
+    pub parent: Option<Entity>,
 }
 
 impl Default for SpawnRoundedRectCommand {
@@ -15,6 +16,7 @@ impl Default for SpawnRoundedRectCommand {
             size: Vec2::new(64.0, 64.0),
             position: Vec2::ZERO,
             color: Srgba::WHITE.into(),
+            parent: None,
         }
     }
 }
@@ -24,7 +26,7 @@ impl Command for SpawnRoundedRectCommand {
         let assets = world.resource::<CommonAssets>();
         let sprite_handle = assets.rounded_square.clone();
 
-        world.spawn(Name::from(self.name))
+        let entity = world.spawn(Name::from(self.name))
             .insert(SpriteBundle {
                 texture: sprite_handle,
                 transform: Transform::from_translation(self.position.extend(0.0)),
@@ -41,7 +43,12 @@ impl Command for SpawnRoundedRectCommand {
                 sides_scale_mode: SliceScaleMode::Tile { stretch_value: 0.2 },
                 max_corner_scale: 1.0,
             }))
+            .id()
+            ;
 
-        ;
+        if let Some(parent) = self.parent {
+            let mut parent = world.entity_mut(parent);
+            parent.add_child(entity);
+        }
     }
 }
