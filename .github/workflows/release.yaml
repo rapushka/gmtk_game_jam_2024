@@ -36,8 +36,8 @@ jobs:
           cargo install wasm-bindgen-cli
 
       - name: Build
-#        env:
-#          RUSTFLAGS: --cfg=web_sys_unstable_apis
+        env:
+          RUSTFLAGS: --cfg=web_sys_unstable_apis
         run: |
           cargo build --release --target wasm32-unknown-unknown
 
