@@ -1,4 +1,4 @@
-use crate::gameplay::health::view::HealthBarOffset;
+use crate::gameplay::health::view::{HealthBar, HealthBarOffset};
 use crate::prelude::*;
 
 pub fn add_health_view(
@@ -13,12 +13,16 @@ pub fn add_health_view(
 
     let font = assets.font.clone();
 
-    commands.spawn_with_name("health bar")
+    let health_bar = commands.spawn_with_name("health bar")
         .set_parent(target)
         .insert(Text2dBundle {
             text: health.0.to_string().to_text(font, view::HEALTH_FONT_SIZE, colors::health_color()),
             transform: Transform::from_translation(Vec3::Y * offset.0),
             ..default()
         })
+        .id();
+
+    commands.entity(target)
+        .insert(HealthBar(health_bar))
     ;
 }
