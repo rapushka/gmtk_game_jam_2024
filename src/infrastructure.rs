@@ -10,13 +10,13 @@ pub struct InfrastructurePlugin;
 impl Plugin for InfrastructurePlugin {
     fn build(&self, app: &mut App) {
         app
-            .enable_state_scoped_entities::<AppState>()
-            .enable_state_scoped_entities::<InGameplay>()
             .init_state::<AppState>()
             .add_computed_state::<InGameplay>()
+            .enable_state_scoped_entities::<AppState>()
+            .enable_state_scoped_entities::<InGameplay>()
 
             .add_plugins(AssetLoadingPlugin)
-            
+
             .add_systems(OnEnter(AppState::MainMenu), skip_to_gameplay)
         ;
     }

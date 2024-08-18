@@ -38,7 +38,7 @@ fn on_play_top_card(
     match **current_turn {
         GameTurn::PlayerTurn => commands.trigger(PlayPlayerCard),
         GameTurn::EnemyTurn => commands.trigger(PlayEnemyCard),
-        _ => panic!("you can't play card in other states!")
+        _ => panic!("you can't play card from other states!")
     }
 }
 
@@ -50,4 +50,6 @@ fn on_enemy_play_card(
 
 fn on_player_play_card(
     _trigger: Trigger<PlayPlayerCard>,
-) {}
+) {
+    info!("--- play card")
+}

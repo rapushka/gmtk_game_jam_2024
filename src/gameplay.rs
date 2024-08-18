@@ -10,7 +10,7 @@ mod enemies;
 pub mod cards;
 pub mod health;
 pub mod unit_common;
-mod game_loop;
+pub mod game_loop;
 
 pub struct GameplayPlugin;
 

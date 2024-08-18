@@ -43,8 +43,8 @@ impl Command for SpawnRoundedRectCommand {
             })
             .insert(ImageScaleMode::Sliced(TextureSlicer {
                 border: BorderRect::square(15.0),
-                center_scale_mode: SliceScaleMode::Tile { stretch_value: 0.1 },
-                sides_scale_mode: SliceScaleMode::Tile { stretch_value: 0.2 },
+                center_scale_mode: SliceScaleMode::Stretch,
+                sides_scale_mode: SliceScaleMode::Stretch,
                 max_corner_scale: 1.0,
             }))
             .id()

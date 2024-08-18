@@ -7,9 +7,9 @@ pub fn on_next_turn_button_clicked(
     trigger: Trigger<Clicked>,
     query: Query<&NextTurnButton>,
     mut playmode: ResMut<NextState<AutoplayState>>,
-    game_phase: Res<State<GameTurn>>,
+    game_turn: Res<State<GameTurn>>,
 ) {
-    if **game_phase != GameTurn::PlayerTurn {
+    if **game_turn != GameTurn::PlayerTurn {
         return;
     }
 
