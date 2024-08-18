@@ -1,5 +1,6 @@
 use crate::gameplay::game_loop::autoplay::*;
 use autoplay::AutoplayState;
+use crate::gameplay::cards::play_card::PlayTopCard;
 use crate::infrastructure::app_state::*;
 use crate::prelude::*;
 
@@ -24,7 +25,11 @@ impl Plugin for GameLoopPlugin {
             .add_sub_state::<GamePhase>()
 
             .add_systems(OnEnter(AppState::in_gameplay()), start_with_player_turn)
-            .add_systems(OnEnter(GamePhase::PlayerTurn), reset_autoplay.run_if(in_state(AutoplayState::is_playing())))
+            .add_systems(OnEnter(GamePhase::PlayerTurn), (
+                play_card,
+                reset_autoplay,
+            ).chain()
+                .run_if(in_state(AutoplayState::is_playing())))
 
             .observe(on_next_turn_button_clicked)
             .observe(on_autoplay_button_clicked)
@@ -36,4 +41,10 @@ fn start_with_player_turn(
     mut next_state: ResMut<NextState<GamePhase>>
 ) {
     next_state.set(GamePhase::PlayerTurn);
+}
+
+fn play_card(
+    mut commands: Commands,
+) {
+    commands.trigger(PlayTopCard);
 }

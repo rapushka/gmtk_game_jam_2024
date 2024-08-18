@@ -7,6 +7,7 @@ use crate::view::ui::gameplay_hud::spawn::spawn_gameplay_hud;
 pub mod types;
 pub mod spawn;
 pub mod order;
+pub mod play_card;
 
 #[derive(Component)]
 pub struct DeckRoot;
