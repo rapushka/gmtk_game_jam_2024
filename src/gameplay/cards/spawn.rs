@@ -1,10 +1,11 @@
 use crate::gameplay::cards::{Card, DeckRoot};
+use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
 use crate::view::ui::create;
 
 #[derive(Event)]
 pub struct SpawnCard {
-    pub name: String,
+    pub card_type: CardType,
 }
 
 pub fn spawn_card(
@@ -14,21 +15,22 @@ pub fn spawn_card(
     deck_root: Query<Entity, With<DeckRoot>>,
 ) {
     for root in deck_root.iter() {
-        let name = trigger.event().name.clone();
+        let event = trigger.event();
+        let name = event.card_type.name();
 
         let card_entity = commands
             .spawn_with_name(&format!("card: {}", name))
-            .insert(Card)
+            .insert(Card(event.card_type))
             .insert(NodeBundle {
                 background_color: colors::card_background_color().into(),
                 style: Style {
                     justify_content: JustifyContent::Center,
                     align_content: AlignContent::Center,
                     align_items: AlignItems::Center,
-                    
+
                     padding: UiRect::all(Val::Px(5.0)),
                     margin: UiRect::all(Val::Px(5.0)),
-                    
+
                     ..default()
                 },
                 ..default()

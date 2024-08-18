@@ -1,13 +1,18 @@
+use crate::gameplay::cards::order::CardOrderingPlugin;
 use crate::gameplay::cards::spawn::*;
+use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
+use crate::view::ui::gameplay::spawn::spawn_gameplay_hud;
 
+pub mod types;
 pub mod spawn;
+pub mod order;
 
 #[derive(Component)]
 pub struct DeckRoot;
 
 #[derive(Component)]
-pub struct Card;
+pub struct Card(pub CardType);
 
 pub struct CardsPlugin;
 
@@ -16,7 +21,9 @@ impl Plugin for CardsPlugin {
         app
             .add_event::<SpawnCard>()
 
-            .add_systems(OnEnter(AppState::in_gameplay()), test_cards_spawn.after(crate::view::ui::gameplay::spawn::spawn_gameplay_hud))
+            .add_plugins(CardOrderingPlugin)
+
+            .add_systems(OnEnter(AppState::in_gameplay()), test_cards_spawn.after(spawn_gameplay_hud))
 
             .observe(spawn_card)
         ;
@@ -26,9 +33,11 @@ impl Plugin for CardsPlugin {
 fn test_cards_spawn(
     mut commands: Commands,
 ) {
-    commands.trigger(SpawnCard { name: "attack1".to_string() });
-    commands.trigger(SpawnCard { name: "attack2".to_string() });
-    commands.trigger(SpawnCard { name: "attack3".to_string() });
-    commands.trigger(SpawnCard { name: "attack4".to_string() });
-    commands.trigger(SpawnCard { name: "attack5".to_string() });
+    let attack = CardType::Attack(balance::ATTACK_COEFFICIENT);
+
+    commands.trigger(SpawnCard { card_type: attack });
+    commands.trigger(SpawnCard { card_type: attack });
+    commands.trigger(SpawnCard { card_type: attack });
+    commands.trigger(SpawnCard { card_type: attack });
+    commands.trigger(SpawnCard { card_type: attack });
 }
