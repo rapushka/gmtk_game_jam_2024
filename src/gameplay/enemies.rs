@@ -6,7 +6,7 @@ use crate::prelude::*;
 use bevy::sprite::Anchor::BottomCenter;
 use crate::gameplay::enemies::ai::EnemyAiPlugin;
 
-mod ai;
+pub mod ai;
 
 #[derive(Component)]
 pub struct Enemy;

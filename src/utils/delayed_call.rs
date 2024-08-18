@@ -1,4 +1,5 @@
 use std::time::Duration;
+use crate::gameplay::enemies::ai::EnemyThinking;
 use crate::prelude::*;
 
 #[derive(Component)]
@@ -16,13 +17,12 @@ impl<E: Event> DelayedEvent<E> {
     }
 }
 
-pub(super) struct DelayedCallPlugin;
+pub struct DelayedCallPlugin;
 
 impl Plugin for DelayedCallPlugin {
     fn build(&self, app: &mut App) {
         app
-        // TODO: add timers
-        // .add_systems(Update, tick_timer::<>)
+            .add_systems(Update, tick_timer::<EnemyThinking>)
         ;
     }
 }

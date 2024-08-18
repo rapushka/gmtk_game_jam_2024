@@ -2,7 +2,7 @@ use bevy::winit::WinitSettings;
 use crate::gameplay::GameplayPlugin;
 use crate::infrastructure::InfrastructurePlugin;
 use crate::prelude::*;
-use crate::prelude::delayed_call::DelayedCallPlugin;
+use crate::prelude::delayed_call::*;
 use crate::tools::ToolsPlugin;
 use crate::view::ViewPlugin;
 
