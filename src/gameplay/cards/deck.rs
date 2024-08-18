@@ -5,9 +5,9 @@ use crate::prelude::*;
 
 #[derive(Event)]
 pub struct SpawnDeck {
-    initial_cards: Vec<CardType>,
-    position: Vec3,
-    parent: Entity,
+    pub initial_cards: Vec<CardType>,
+    pub position: Vec3,
+    pub parent: Entity,
 }
 
 #[derive(Component)]

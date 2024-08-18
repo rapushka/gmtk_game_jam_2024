@@ -39,7 +39,7 @@ impl Command for SpawnRoundedRectCommand {
             None => commands.spawn_with_name(self.name),
         };
 
-        let entity = entity_command
+        entity_command
             .insert(SpriteBundle {
                 texture: sprite_handle,
                 transform: Transform::from_translation(self.position.extend(z_position)),
@@ -55,13 +55,10 @@ impl Command for SpawnRoundedRectCommand {
                 center_scale_mode: SliceScaleMode::Stretch,
                 sides_scale_mode: SliceScaleMode::Stretch,
                 max_corner_scale: 1.0,
-            }))
-            .id()
-            ;
+            }));
 
         if let Some(parent) = self.parent {
-            let mut parent = world.entity_mut(parent);
-            parent.add_child(entity);
+            entity_command.set_parent(parent);
         }
     }
 }

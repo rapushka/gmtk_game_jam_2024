@@ -33,16 +33,15 @@ impl Command for SpawnTextCommand {
             None => commands.spawn_with_name(&format!("text: {}", self.text)),
         };
 
-        let entity = entity_command
+        entity_command
             .insert(Text2dBundle {
                 text: self.text.to_text(font, self.font_size, self.color),
                 transform: Transform::from_translation(self.position.extend(1.0)),
                 ..default()
-            })
-            .id();
+            });
 
         if let Some(parent) = self.parent {
-            world.entity_mut(parent).add_child(entity);
+            entity_command.set_parent(parent);
         }
     }
 }
