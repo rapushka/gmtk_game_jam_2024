@@ -8,7 +8,7 @@ mod autoplay;
 
 #[derive(SubStates, Clone, PartialEq, Eq, Hash, Debug, Default)]
 #[source(InGameplay = InGameplay)]
-pub enum GamePhase {
+pub enum GameTurn {
     #[default]
     Setup,
     PlayerTurn,
@@ -22,10 +22,10 @@ impl Plugin for GameLoopPlugin {
     fn build(&self, app: &mut App) {
         app
             .init_state::<AutoplayState>()
-            .add_sub_state::<GamePhase>()
+            .add_sub_state::<GameTurn>()
 
             .add_systems(OnEnter(AppState::in_gameplay()), start_with_player_turn)
-            .add_systems(OnEnter(GamePhase::PlayerTurn), (
+            .add_systems(OnEnter(GameTurn::PlayerTurn), (
                 play_card,
                 reset_autoplay,
             ).chain()
@@ -38,9 +38,9 @@ impl Plugin for GameLoopPlugin {
 }
 
 fn start_with_player_turn(
-    mut next_state: ResMut<NextState<GamePhase>>
+    mut next_state: ResMut<NextState<GameTurn>>
 ) {
-    next_state.set(GamePhase::PlayerTurn);
+    next_state.set(GameTurn::PlayerTurn);
 }
 
 fn play_card(

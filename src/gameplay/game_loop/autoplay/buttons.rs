@@ -1,5 +1,5 @@
 use crate::gameplay::game_loop::autoplay::AutoplayState;
-use crate::gameplay::game_loop::GamePhase;
+use crate::gameplay::game_loop::GameTurn;
 use crate::prelude::*;
 use crate::prelude::gameplay_hud::{AutoPlayButton, NextTurnButton};
 
@@ -7,9 +7,9 @@ pub fn on_next_turn_button_clicked(
     trigger: Trigger<Clicked>,
     query: Query<&NextTurnButton>,
     mut playmode: ResMut<NextState<AutoplayState>>,
-    game_phase: Res<State<GamePhase>>,
+    game_phase: Res<State<GameTurn>>,
 ) {
-    if **game_phase != GamePhase::PlayerTurn {
+    if **game_phase != GameTurn::PlayerTurn {
         return;
     }
 
