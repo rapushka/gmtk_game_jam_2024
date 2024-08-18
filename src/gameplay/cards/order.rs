@@ -1,6 +1,8 @@
-use bevy::ecs::query::QuerySingleError;
-use crate::gameplay::cards::{Card, DeckRoot};
+#![allow(clippy::too_many_arguments, clippy::type_complexity)]
+
+use crate::gameplay::cards::{Card, DeckRoot, PlayerCard};
 use crate::gameplay::cards::play_card::PlayPlayerCard;
+use crate::gameplay::character::Character;
 use crate::prelude::*;
 
 #[derive(Resource, Default)]
@@ -10,7 +12,7 @@ pub struct CardCount(u8);
 pub struct CardOrder(u8);
 
 #[derive(Component)]
-pub struct TopCard;
+pub struct TopCard(pub Entity);
 
 pub struct CardOrderingPlugin;
 
@@ -21,7 +23,7 @@ impl Plugin for CardOrderingPlugin {
 
             .init_resource::<CardCount>()
 
-            .add_systems(Update, update_top_card)
+            .add_systems(Update, update_player_top_card)
 
             .observe(add_card_order)
             .observe(decrement_order_on_card_played)
@@ -71,27 +73,18 @@ fn rearrange(
     }
 }
 
-fn update_top_card(
+fn update_player_top_card(
     mut commands: Commands,
-    cards: Query<(Entity, &CardOrder), (Without<TopCard>, Changed<CardOrder>)>,
-    top_card: Query<(Entity, &CardOrder), (With<TopCard>, Changed<CardOrder>)>,
+    characters: Query<Entity, With<Character>>,
+    cards: Query<(Entity, &CardOrder), (With<PlayerCard>, Changed<CardOrder>)>,
 ) {
-    match top_card.get_single() {
-        Ok((card, order)) => {
-            if order.0 != 0 {
-                commands.entity(card).remove::<TopCard>();
-            }
-        }
-        Err(error) => {
-            if let QuerySingleError::MultipleEntities(message) = error {
-                panic!("more than one TopCard! error message: {}", message);
-            }
-        }
-    }
-
     for (card, order) in cards.iter() {
-        if order.0 == 0 {
-            commands.entity(card).insert(TopCard);
+        if order.0 != 0 {
+            continue;
+        }
+
+        for character in characters.iter() {
+            commands.entity(character).insert(TopCard(card));
         }
     }
 }
