@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::view::ui::gameplay::spawn::spawn_gameplay_hud;
+use crate::view::ui::gameplay_hud::spawn::spawn_gameplay_hud;
 
 pub mod spawn;
 

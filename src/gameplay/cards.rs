@@ -2,7 +2,7 @@ use crate::gameplay::cards::order::CardOrderingPlugin;
 use crate::gameplay::cards::spawn::*;
 use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
-use crate::view::ui::gameplay::spawn::spawn_gameplay_hud;
+use crate::view::ui::gameplay_hud::spawn::spawn_gameplay_hud;
 
 pub mod types;
 pub mod spawn;

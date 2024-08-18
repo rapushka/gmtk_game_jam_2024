@@ -1,7 +1,7 @@
 use crate::gameplay::cards::DeckRoot;
 use crate::prelude::*;
 use crate::view::ui::create;
-use crate::view::ui::gameplay::AutoPlayButton;
+use crate::view::ui::gameplay_hud::AutoPlayButton;
 
 pub fn spawn_gameplay_hud(
     mut commands: Commands,

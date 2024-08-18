@@ -1,7 +1,7 @@
 use crate::prelude::{App, Plugin};
-use crate::view::ui::gameplay::GameplayUiPlugin;
+use crate::view::ui::gameplay_hud::GameplayUiPlugin;
 
-pub mod gameplay;
+pub mod gameplay_hud;
 pub mod create;
 
 pub struct UiPlugin;
