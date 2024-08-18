@@ -1,13 +1,15 @@
+use crate::gameplay::cards::deck::DeckPlugin;
 use crate::gameplay::cards::order::CardOrderingPlugin;
 use crate::gameplay::cards::play_card::*;
-use crate::gameplay::cards::spawn::*;
+use crate::gameplay::cards::old_spawn::*;
 use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
 use crate::view::ui::gameplay_hud::spawn::spawn_gameplay_hud;
 
 pub mod deck;
 pub mod types;
-pub mod spawn;
+pub mod setup;
+pub mod old_spawn;
 pub mod order;
 pub mod play_card;
 
@@ -30,7 +32,11 @@ impl Plugin for CardsPlugin {
         app
             .add_event::<SpawnCard>()
 
-            .add_plugins((CardOrderingPlugin, PlayCardPlugin))
+            .add_plugins((
+                CardOrderingPlugin,
+                PlayCardPlugin,
+                DeckPlugin,
+            ))
 
             .add_systems(OnEnter(AppState::in_gameplay()), test_cards_spawn.after(spawn_gameplay_hud))
 

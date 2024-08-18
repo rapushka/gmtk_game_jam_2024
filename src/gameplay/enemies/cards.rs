@@ -1,5 +1,5 @@
 use bevy::ecs::query::QueryEntityError;
-use crate::gameplay::cards::spawn::SpawnCard;
+use crate::gameplay::cards::old_spawn::SpawnCard;
 use crate::prelude::*;
 use crate::gameplay::enemies::{CardsHolder, Enemy};
 
