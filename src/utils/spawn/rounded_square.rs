@@ -2,6 +2,8 @@ use bevy::ecs::world::Command;
 use crate::prelude::*;
 
 pub struct SpawnRoundedRectCommand {
+    /// if None - the command will spawn a new entity
+    pub entity: Option<Entity>,
     pub name: &'static str,
     pub size: Vec2,
     pub position: Vec2,
@@ -19,6 +21,7 @@ impl Default for SpawnRoundedRectCommand {
             is_under_parent: true,
             color: Srgba::WHITE.into(),
             parent: None,
+            entity: None,
         }
     }
 }
@@ -30,7 +33,13 @@ impl Command for SpawnRoundedRectCommand {
 
         let z_position = if self.is_under_parent { -1.0 } else { 1.0 };
 
-        let entity = world.spawn(Name::from(self.name))
+        let mut commands = world.commands();
+        let mut entity_command = match self.entity {
+            Some(e) => commands.entity(e),
+            None => commands.spawn_with_name(self.name),
+        };
+
+        let entity = entity_command
             .insert(SpriteBundle {
                 texture: sprite_handle,
                 transform: Transform::from_translation(self.position.extend(z_position)),

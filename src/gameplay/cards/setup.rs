@@ -1,7 +1,10 @@
 use crate::prelude::*;
 use bevy::ecs::world::Command;
 use bevy::prelude::Entity;
+use crate::gameplay::cards::Card;
 use crate::gameplay::cards::deck::Deck;
+use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
+use crate::utils::spawn::text::SpawnTextCommand;
 
 pub struct SetupDeck(pub Entity);
 
@@ -14,17 +17,38 @@ impl Command for SetupDeck {
         let mut commands = world.commands();
 
         for card in deck {
-            commands.add(SetupCard { entity: card });
+            commands.add(SetupCardView { entity: card });
         }
     }
 }
 
-pub struct SetupCard {
+pub struct SetupCardView {
     pub entity: Entity,
 }
 
-impl Command for SetupCard {
+impl Command for SetupCardView {
     fn apply(self, world: &mut World) {
-        todo!()
+        let card_entity = self.entity;
+        let card_type = world.get::<Card>(card_entity)
+            .expect("SetupCard must only be called on Cards").0;
+
+        let mut commands = world.commands();
+        let background = commands.spawn_with_name("background").id();
+
+        commands.add(SpawnRoundedRectCommand {
+            entity: Some(background),
+            name: "background",
+            size: view::CARD_ITEM_SIZE,
+            is_under_parent: true,
+            color: colors::card_background_color(),
+            parent: None,
+            ..default()
+        });
+
+        commands.add(SpawnTextCommand {
+            text: card_type.name(),
+            parent: Some(background),
+            ..default()
+        });
     }
 }
