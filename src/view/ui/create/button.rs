@@ -50,30 +50,23 @@ fn button_internal<C>(
 }
 
 pub fn image_button<C>(
-    asset_server: &Res<AssetServer>,
+    icon: &Handle<Image>,
     parent: &mut ChildBuilder,
     component: C,
-    path: &'static str,
     width: f32,
 ) where
     C: Component,
 {
-    parent.spawn((
-        component,
-        ButtonBundle {
-            style: styles::square_button(width),
+    parent.spawn_with_name("image button")
+        .insert(component)
+        .insert(ButtonBundle {
+            style: styles::button(width),
             background_color: colors::default_button().into(),
             ..default()
-        },
-    ))
+        })
         .with_children(|parent| {
             parent.spawn(ImageBundle {
-                style: Style {
-                    // This will set the logo to be 200px wide, and auto adjust its height
-                    width: Val::Px(width),
-                    ..default()
-                },
-                image: UiImage::new(asset_server.load(path)),
+                image: UiImage::new(icon.clone()),
                 ..default()
             });
         });

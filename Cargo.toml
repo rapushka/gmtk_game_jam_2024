@@ -20,3 +20,13 @@ bevy = { version = "0.14", features = ["dynamic_linking"] }
 
 [workspace]
 resolver = "2"
+
+## Linker
+# for Linux
+[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+# for Windows
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"

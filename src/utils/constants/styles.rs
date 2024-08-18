@@ -57,11 +57,13 @@ pub const SPEECH_BUBBLE: Style = {
 };
 
 pub const BUTTON: Style = {
+    let width = 200.0;
+
     let mut style = Style::DEFAULT;
     style.justify_content = JustifyContent::Center;
     style.align_self = AlignSelf::Center;
     style.align_items = AlignItems::Center;
-    style.width = Val::Px(200.0);
+    style.width = Val::Px(width);
     style.height = Val::Px(50.0);
     style.margin = UiRect::all(Val::Px(20.0));
     style
@@ -93,6 +95,18 @@ pub fn square_button(size: f32) -> Style {
         width: Val::Px(size),
         height: Val::Px(size),
         padding: UiRect::all(Val::Px(10.0)),
+        ..default()
+    }
+}
+
+pub fn button(width: f32) -> Style {
+    Style {
+        justify_content: JustifyContent::Center,
+        align_self: AlignSelf::Center,
+        align_items: AlignItems::Center,
+
+        width: Val::Px(width),
+        height: Val::Px(50.0),
         ..default()
     }
 }

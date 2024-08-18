@@ -19,11 +19,20 @@ impl Plugin for AssetLoadingPlugin {
 
 #[derive(AssetCollection, Resource)]
 pub struct UiAssets {
-    #[asset(path = "common/rounded_square.png")]
+    #[asset(path = "ui/rounded_square.png")]
     pub rounded_square: Handle<Image>,
 
     #[asset(path = "fonts/FiraSans-Bold.ttf")]
     pub font: Handle<Font>,
+
+    #[asset(path = "ui/play.png")]
+    pub icon_play: Handle<Image>,
+
+    #[asset(path = "ui/pause.png")]
+    pub icon_pause: Handle<Image>,
+
+    #[asset(path = "ui/step.png")]
+    pub icon_step: Handle<Image>,
 }
 
 #[derive(AssetCollection, Resource)]

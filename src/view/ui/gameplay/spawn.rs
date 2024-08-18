@@ -33,12 +33,12 @@ pub fn spawn_gameplay_hud(
                 })
             ;
 
-            spawn_deck_panel(sprite_handle, root, &assets);
+            spawn_right_panel(sprite_handle, root, &assets);
         })
     ;
 }
 
-fn spawn_deck_panel(
+fn spawn_right_panel(
     sprite_handle: Handle<Image>,
     root: &mut ChildBuilder,
     assets: &Res<UiAssets>,
@@ -59,16 +59,19 @@ fn spawn_deck_panel(
             ..default()
         })
         .with_children(|right_dock| {
-            panel(sprite_handle, right_dock, |panel| {
+            panel_background(sprite_handle, right_dock, |panel| {
                 create::list_view(panel, DeckRoot, Val::Percent(75.0));
 
-                create::button(font, panel, "play".to_string(), AutoPlayButton);
+                create::horizontal_layout(panel, |horisontal_layout| {
+                    create::image_button(&assets.icon_play, horisontal_layout, AutoPlayButton, 160.0);
+                    create::image_button(&assets.icon_step, horisontal_layout, AutoPlayButton, 80.0);
+                });
             });
         })
     ;
 }
 
-fn panel(
+fn panel_background(
     sprite_handle: Handle<Image>,
     parent: &mut ChildBuilder,
     build_children: impl FnOnce(&mut ChildBuilder),
