@@ -1,3 +1,4 @@
+use bevy::ecs::observer::ObserverState;
 #[cfg(debug_assertions)]
 use bevy_editor_pls::EditorPlugin;
 use crate::prelude::*;
@@ -15,6 +16,8 @@ impl Plugin for DebugPlugin {
             ))
 
             .add_systems(Update, log_state_transition.run_if(on_event::<AppStateTransition>()))
+
+            .observe(rename_observers)
         ;
     }
 }
@@ -24,4 +27,12 @@ fn log_state_transition(
     for event in event.read() {
         info!("state transition: {:?} -> {:?}", event.exited, event.entered);
     }
+}
+
+fn rename_observers(
+    trigger: Trigger<OnAdd, ObserverState>,
+    mut commands: Commands,
+) {
+    commands.entity(trigger.entity())
+        .insert(Name::new("observer"));
 }
