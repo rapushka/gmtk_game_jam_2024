@@ -17,9 +17,9 @@ impl Plugin for InvokeCardPlugin {
 
 #[derive(Event)]
 pub struct InvokeCard {
-    card: CardType,
-    sender: Entity,
-    target: Entity,
+    pub card: CardType,
+    pub sender: Entity,
+    pub target: Entity,
 }
 
 #[allow(dead_code)]

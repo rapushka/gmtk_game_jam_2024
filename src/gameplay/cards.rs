@@ -16,6 +16,12 @@ pub struct DeckRoot;
 #[derive(Component)]
 pub struct Card(pub CardType);
 
+#[derive(Component)]
+pub struct PlayerCard;
+
+#[derive(Component)]
+pub struct EnemyCard;
+
 pub struct CardsPlugin;
 
 impl Plugin for CardsPlugin {

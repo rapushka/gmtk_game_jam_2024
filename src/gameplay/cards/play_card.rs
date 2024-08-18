@@ -1,4 +1,7 @@
-use crate::gameplay::cards::play_card::invoke::InvokeCardPlugin;
+use crate::gameplay::cards::order::TopCard;
+use crate::gameplay::cards::play_card::invoke::{InvokeCard, InvokeCardPlugin};
+use crate::gameplay::cards::{Card, PlayerCard};
+use crate::gameplay::character::Character;
 use crate::gameplay::game_loop::GameTurn;
 use crate::prelude::*;
 
@@ -50,6 +53,19 @@ fn on_enemy_play_card(
 
 fn on_player_play_card(
     _trigger: Trigger<PlayPlayerCard>,
+    mut commands: Commands,
+    characters: Query<(Entity, &Opponent), With<Character>>,
+    top_card: Query<Entity, (With<TopCard>, With<PlayerCard>)>,
+    cards: Query<&Card>,
 ) {
-    info!("--- play card")
+    for (character, enemy) in characters.iter() {
+        let card_entity = top_card.get_single().expect("unable to get TopCard");
+        let card = cards.get(card_entity).expect("top card doesn't have CardType").0;
+
+        commands.trigger(InvokeCard {
+            card,
+            sender: character,
+            target: enemy.0,
+        });
+    }
 }

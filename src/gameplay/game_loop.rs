@@ -64,7 +64,6 @@ fn start_with_player_turn(
 fn play_card(
     mut commands: Commands,
 ) {
-    info!("--- huh?");
     commands.trigger(PlayTopCard);
 }
 

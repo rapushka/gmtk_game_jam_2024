@@ -7,3 +7,6 @@ pub struct UnitBundle {
     pub stats: StatsBundle,
     pub health_bar_offset: HealthBarOffset,
 }
+
+#[derive(Component)]
+pub struct Opponent(pub Entity);

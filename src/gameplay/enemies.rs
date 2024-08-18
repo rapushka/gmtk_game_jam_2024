@@ -25,9 +25,9 @@ fn spawn_enemy_on_character_spawned(
     assets: Res<EnemyAssets>,
 ) {
     let sprite_handle = assets.rat.clone();
-    let entity = trigger.entity();
+    let character = trigger.entity();
 
-    commands.spawn_with_name("rat")
+    let enemy = commands.spawn_with_name("rat")
         .insert(StateScoped(AppState::in_gameplay()))
         .insert(Enemy)
         .insert(UnitBundle {
@@ -37,7 +37,8 @@ fn spawn_enemy_on_character_spawned(
             },
             health_bar_offset: HealthBarOffset(view::ENEMY_HEALTH_BAR_OFFSET),
         })
-        .set_parent(entity)
+        .insert(Opponent(character))
+        .set_parent(character)
         .insert(SpriteBundle {
             texture: sprite_handle,
             sprite: Sprite {
@@ -47,5 +48,7 @@ fn spawn_enemy_on_character_spawned(
             ..default()
         })
         .insert(Transform::from_xyz(0.0, 100.0, -1.0))
-    ;
+        .id();
+
+    commands.entity(character).insert(Opponent(enemy));
 }

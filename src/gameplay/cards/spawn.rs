@@ -1,4 +1,4 @@
-use crate::gameplay::cards::{Card, DeckRoot};
+use crate::gameplay::cards::{Card, DeckRoot, PlayerCard};
 use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
 use crate::view::ui::create;
@@ -21,6 +21,7 @@ pub fn spawn_card(
         let card_entity = commands
             .spawn_with_name(&format!("card: {}", name))
             .insert(Card(event.card_type))
+            .insert(PlayerCard)
             .insert(NodeBundle {
                 background_color: colors::card_background_color().into(),
                 style: Style {
