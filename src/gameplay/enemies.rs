@@ -1,10 +1,12 @@
-use bevy::sprite::Anchor::BottomCenter;
-use bevy::utils::tracing::Instrument;
-use crate::gameplay::character::Character;
 use crate::gameplay::character::stats::{StatsBundle, Strength};
+use crate::gameplay::character::Character;
 use crate::gameplay::health::components::Health;
 use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
+use bevy::sprite::Anchor::BottomCenter;
+use crate::gameplay::enemies::ai::EnemyAiPlugin;
+
+mod ai;
 
 #[derive(Component)]
 pub struct Enemy;
@@ -14,6 +16,8 @@ pub struct EnemiesPlugin;
 impl Plugin for EnemiesPlugin {
     fn build(&self, app: &mut App) {
         app
+            .add_plugins(EnemyAiPlugin)
+
             .observe(spawn_enemy_on_character_spawned)
         ;
     }

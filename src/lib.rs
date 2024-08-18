@@ -2,6 +2,7 @@ use bevy::winit::WinitSettings;
 use crate::gameplay::GameplayPlugin;
 use crate::infrastructure::InfrastructurePlugin;
 use crate::prelude::*;
+use crate::prelude::delayed_call::DelayedCallPlugin;
 use crate::tools::ToolsPlugin;
 use crate::view::ViewPlugin;
 
@@ -25,6 +26,7 @@ impl Plugin for GamePlugin {
 
                 // --- 
                 ViewPlugin,
+                DelayedCallPlugin,
                 InfrastructurePlugin,
                 GameplayPlugin,
             ))
