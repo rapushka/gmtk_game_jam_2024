@@ -4,3 +4,4 @@ pub use crate::utils::*;
 pub use crate::infrastructure::assets::*;
 pub use crate::gameplay::health::components::*;
 pub use crate::gameplay::unit_common::*;
+pub use crate::view::ui::*;
