@@ -5,6 +5,7 @@ use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
 use crate::view::ui::gameplay_hud::spawn::spawn_gameplay_hud;
 
+pub mod deck;
 pub mod types;
 pub mod spawn;
 pub mod order;
