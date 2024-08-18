@@ -1,8 +1,11 @@
 use bevy::sprite::Anchor;
+use crate::gameplay::character::stats::{StatsBundle, Strength};
 use crate::gameplay::health::components::Health;
 use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
 use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
+
+pub mod stats;
 
 #[derive(Component)]
 pub struct Character;
@@ -28,7 +31,10 @@ fn spawn_character(
         .insert(Character)
         .insert(StateScoped(AppState::in_gameplay()))
         .insert(UnitBundle {
-            health: Health(balance::BOUNCER_HEALTH),
+            stats: StatsBundle {
+                health: Health(balance::BOUNCER_HEALTH),
+                strength: Strength(balance::BOUNCER_STRENGTH),
+            },
             health_bar_offset: HealthBarOffset(view::CHARACTER_HEALTH_BAR_OFFSET),
         })
         .insert(SpriteBundle {

@@ -1,6 +1,7 @@
 use bevy::sprite::Anchor::BottomCenter;
 use bevy::utils::tracing::Instrument;
 use crate::gameplay::character::Character;
+use crate::gameplay::character::stats::{StatsBundle, Strength};
 use crate::gameplay::health::components::Health;
 use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
@@ -30,7 +31,10 @@ fn spawn_enemy_on_character_spawned(
         .insert(StateScoped(AppState::in_gameplay()))
         .insert(Enemy)
         .insert(UnitBundle {
-            health: Health(balance::RAT_HEALTH),
+            stats: StatsBundle {
+                health: Health(balance::RAT_HEALTH),
+                strength: Strength(balance::RAT_STRENGTH),
+            },
             health_bar_offset: HealthBarOffset(view::ENEMY_HEALTH_BAR_OFFSET),
         })
         .set_parent(entity)

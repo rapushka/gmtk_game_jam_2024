@@ -1,4 +1,5 @@
 use crate::gameplay::cards::order::CardOrderingPlugin;
+use crate::gameplay::cards::play_card::*;
 use crate::gameplay::cards::spawn::*;
 use crate::gameplay::cards::types::CardType;
 use crate::prelude::*;
@@ -22,7 +23,7 @@ impl Plugin for CardsPlugin {
         app
             .add_event::<SpawnCard>()
 
-            .add_plugins(CardOrderingPlugin)
+            .add_plugins((CardOrderingPlugin, PlayCardPlugin))
 
             .add_systems(OnEnter(AppState::in_gameplay()), test_cards_spawn.after(spawn_gameplay_hud))
 
