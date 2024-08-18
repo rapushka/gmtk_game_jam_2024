@@ -6,6 +6,9 @@ pub mod spawn;
 #[derive(Component)]
 pub struct AutoPlayButton;
 
+#[derive(Component)]
+pub struct NextTurnButton;
+
 pub struct GameplayUiPlugin;
 
 impl Plugin for GameplayUiPlugin {

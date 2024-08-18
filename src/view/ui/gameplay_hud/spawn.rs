@@ -1,7 +1,7 @@
 use crate::gameplay::cards::DeckRoot;
 use crate::prelude::*;
 use crate::view::ui::create;
-use crate::view::ui::gameplay_hud::AutoPlayButton;
+use crate::view::ui::gameplay_hud::*;
 
 pub fn spawn_gameplay_hud(
     mut commands: Commands,
@@ -64,7 +64,7 @@ fn spawn_right_panel(
 
                 create::horizontal_layout(panel, |horisontal_layout| {
                     create::image_button(&assets.icon_play, horisontal_layout, AutoPlayButton, 160.0);
-                    create::image_button(&assets.icon_step, horisontal_layout, AutoPlayButton, 80.0);
+                    create::image_button(&assets.icon_step, horisontal_layout, NextTurnButton, 80.0);
                 });
             });
         })
