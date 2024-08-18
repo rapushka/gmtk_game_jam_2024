@@ -6,3 +6,8 @@ pub const CHARACTER_HEALTH_BAR_OFFSET: f32 = -20.0;
 pub const ENEMY_HEALTH_BAR_OFFSET: f32 = 185.0;
 
 pub const HEALTH_FONT_SIZE: f32 = 30.0;
+
+pub mod timings {
+    pub const ENEMY_THINKING_SECONDS: f32 = 1.0;
+    pub const TURN_PASS_DELAY: f32 = 1.0;
+}

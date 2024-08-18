@@ -1,34 +1,15 @@
-use bevy::utils::info;
-use crate::gameplay::game_loop::autoplay::*;
-use autoplay::AutoplayState;
 use crate::gameplay::cards::play_card::PlayTopCard;
+use crate::gameplay::game_loop::autoplay::*;
 use crate::infrastructure::app_state::*;
 use crate::prelude::*;
+use autoplay::AutoplayState;
+use game_turn::GameTurn;
+use crate::gameplay::game_loop::game_turn::IsWaiting;
+use crate::gameplay::game_loop::waiting::TurnWaitingPlugin;
 
 pub mod autoplay;
-
-#[derive(SubStates, Clone, PartialEq, Eq, Hash, Debug, Default)]
-#[source(InGameplay = InGameplay)]
-pub enum GameTurn {
-    #[default]
-    Setup,
-    PlayerTurn,
-    EnemyTurn,
-    Waiting {
-        next_state: Box<GameTurn>,
-    },
-    Encounter,
-}
-
-impl GameTurn {
-    pub fn flip(&self) -> Self {
-        match *self {
-            GameTurn::PlayerTurn => GameTurn::EnemyTurn,
-            GameTurn::EnemyTurn => GameTurn::PlayerTurn,
-            _ => panic!("can't flip other states!"),
-        }
-    }
-}
+mod waiting;
+pub mod game_turn;
 
 pub struct GameLoopPlugin;
 
@@ -38,10 +19,13 @@ impl Plugin for GameLoopPlugin {
             .init_state::<AutoplayState>()
             .add_computed_state::<IsAutoPlaying>()
             .add_sub_state::<GameTurn>()
+            .add_computed_state::<IsWaiting>()
+
+            .add_plugins(TurnWaitingPlugin)
 
             .add_systems(OnEnter(AppState::in_gameplay()), start_with_player_turn)
             .add_systems(Update, (
-                play_card,
+                play_top_card,
                 reset_autoplay,
                 pass_turn,
             ).chain()
@@ -61,7 +45,7 @@ fn start_with_player_turn(
     next_state.set(GameTurn::PlayerTurn);
 }
 
-fn play_card(
+fn play_top_card(
     mut commands: Commands,
 ) {
     commands.trigger(PlayTopCard);

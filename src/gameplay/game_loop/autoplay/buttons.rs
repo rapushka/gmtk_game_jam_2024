@@ -1,5 +1,5 @@
 use crate::gameplay::game_loop::autoplay::AutoplayState;
-use crate::gameplay::game_loop::GameTurn;
+use crate::gameplay::game_loop::game_turn::GameTurn;
 use crate::prelude::*;
 use crate::prelude::gameplay_hud::{AutoPlayButton, NextTurnButton};
 

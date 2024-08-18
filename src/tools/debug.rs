@@ -3,7 +3,7 @@ use bevy::ecs::observer::ObserverState;
 #[cfg(debug_assertions)]
 use bevy_editor_pls::EditorPlugin;
 use crate::gameplay::game_loop::autoplay::AutoplayState;
-use crate::gameplay::game_loop::GameTurn;
+use crate::gameplay::game_loop::game_turn::GameTurn;
 use crate::prelude::*;
 
 pub struct DebugPlugin;

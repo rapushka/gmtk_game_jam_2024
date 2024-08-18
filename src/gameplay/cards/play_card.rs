@@ -2,7 +2,7 @@ use crate::gameplay::cards::order::*;
 use crate::gameplay::cards::play_card::invoke::{InvokeCard, InvokeCardPlugin};
 use crate::gameplay::cards::{Card, PlayerCard};
 use crate::gameplay::character::Character;
-use crate::gameplay::game_loop::GameTurn;
+use crate::gameplay::game_loop::game_turn::GameTurn;
 use crate::prelude::*;
 
 mod invoke;
