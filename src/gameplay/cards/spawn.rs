@@ -18,8 +18,8 @@ pub fn spawn_card(
     let event = trigger.event();
     let name = event.card_type.name();
 
-    let entity_command = commands
-        .spawn_with_name(&format!("card: {}", name))
+    let mut tmp = commands.spawn_with_name(&format!("card: {}", name));
+    let entity_command = tmp
         .insert(Card(event.card_type))
         .insert(NodeBundle {
             background_color: colors::card_background_color().into(),
