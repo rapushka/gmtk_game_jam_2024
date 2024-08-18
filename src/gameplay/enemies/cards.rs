@@ -1,19 +1,28 @@
+use bevy::ecs::query::QueryEntityError;
 use crate::gameplay::cards::spawn::SpawnCard;
 use crate::prelude::*;
-use crate::gameplay::enemies::Enemy;
+use crate::gameplay::enemies::{CardsHolder, Enemy};
 
 pub fn spawn_enemy_cards(
-    trigger: Trigger<OnAdd, Enemy>,
+    trigger: Trigger<OnAdd, CardsHolder>,
     mut commands: Commands,
-    enemies: Query<&Enemy>,
+    enemies: Query<(&Enemy, &CardsHolder)>,
 ) {
     let enemy_entity = trigger.entity();
-    let enemy_type = enemies.get(enemy_entity).unwrap().0;
+    info!("--- check");
+    let result = enemies.get(enemy_entity);
+    match result {
+        Ok(_) => {}
+        Err(err) => {
+            println!("{}", err);
+        }
+    };
+    let (enemy, card_holder) = result.unwrap();
 
-    for card_type in enemy_type.cards() {
+    for card_type in enemy.0.cards() {
         commands.trigger(SpawnCard {
             card_type,
-            parent: enemy_entity,
+            parent: card_holder.0,
             is_player_card: false,
         });
     }

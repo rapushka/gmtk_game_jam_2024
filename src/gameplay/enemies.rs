@@ -1,12 +1,12 @@
 use crate::gameplay::character::stats::{StatsBundle, Strength};
 use crate::gameplay::character::Character;
+use crate::gameplay::enemies::ai::EnemyAiPlugin;
+use crate::gameplay::enemies::cards::spawn_enemy_cards;
+use crate::gameplay::enemies::enemy_type::EnemyType;
 use crate::gameplay::health::components::Health;
 use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
 use bevy::sprite::Anchor::BottomCenter;
-use crate::gameplay::enemies::ai::EnemyAiPlugin;
-use crate::gameplay::enemies::cards::spawn_enemy_cards;
-use crate::gameplay::enemies::enemy_type::EnemyType;
 
 pub mod enemy_type;
 pub mod ai;
@@ -17,6 +17,9 @@ pub struct Enemy(pub EnemyType);
 
 #[derive(Component)]
 pub struct HasCards(pub Vec<Entity>);
+
+#[derive(Component)]
+pub struct CardsHolder(pub Entity);
 
 pub struct EnemiesPlugin;
 
@@ -64,6 +67,17 @@ fn spawn_enemy_on_character_spawned(
         .insert(Transform::from_xyz(0.0, 100.0, -1.0))
         .insert(HasCards(Vec::new()))
         .id();
-
+    
     commands.entity(character).insert(Opponent(enemy));
+
+    // # Cards Holder
+    let card_holder = commands.spawn_with_name("cards holder")
+        .set_parent(enemy)
+        .insert(NodeBundle {
+            transform: Transform::from_xyz(0.0, view::ENEMY_CARDS_ROOT_OFFSET, 0.0),
+            ..default()
+        })
+        .id();
+
+    commands.entity(enemy).insert(CardsHolder(card_holder));
 }
