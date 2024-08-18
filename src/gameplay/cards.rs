@@ -40,12 +40,14 @@ impl Plugin for CardsPlugin {
 
 fn test_cards_spawn(
     mut commands: Commands,
+    deck_root: Query<Entity, With<DeckRoot>>,
 ) {
     let attack = CardType::Attack(balance::ATTACK_COEFFICIENT);
+    let deck_root = deck_root.get_single().unwrap();
 
-    commands.trigger(SpawnCard { card_type: attack });
-    commands.trigger(SpawnCard { card_type: attack });
-    commands.trigger(SpawnCard { card_type: attack });
-    commands.trigger(SpawnCard { card_type: attack });
-    commands.trigger(SpawnCard { card_type: attack });
+    commands.trigger(SpawnCard { card_type: attack, is_player_card: true, parent: deck_root });
+    commands.trigger(SpawnCard { card_type: attack, is_player_card: true, parent: deck_root });
+    commands.trigger(SpawnCard { card_type: attack, is_player_card: true, parent: deck_root });
+    commands.trigger(SpawnCard { card_type: attack, is_player_card: true, parent: deck_root });
+    commands.trigger(SpawnCard { card_type: attack, is_player_card: true, parent: deck_root });
 }

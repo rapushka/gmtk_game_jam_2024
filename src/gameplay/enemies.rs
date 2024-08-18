@@ -5,11 +5,18 @@ use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
 use bevy::sprite::Anchor::BottomCenter;
 use crate::gameplay::enemies::ai::EnemyAiPlugin;
+use crate::gameplay::enemies::cards::spawn_enemy_cards;
+use crate::gameplay::enemies::enemy_type::EnemyType;
 
+pub mod enemy_type;
 pub mod ai;
+pub mod cards;
 
 #[derive(Component)]
-pub struct Enemy;
+pub struct Enemy(pub EnemyType);
+
+#[derive(Component)]
+pub struct HasCards(pub Vec<Entity>);
 
 pub struct EnemiesPlugin;
 
@@ -19,6 +26,7 @@ impl Plugin for EnemiesPlugin {
             .add_plugins(EnemyAiPlugin)
 
             .observe(spawn_enemy_on_character_spawned)
+            .observe(spawn_enemy_cards)
         ;
     }
 }
@@ -31,9 +39,11 @@ fn spawn_enemy_on_character_spawned(
     let sprite_handle = assets.rat.clone();
     let character = trigger.entity();
 
-    let enemy = commands.spawn_with_name("rat")
+    let enemy_type = EnemyType::Rat;
+
+    let enemy = commands.spawn_with_name(&enemy_type.name())
         .insert(StateScoped(AppState::in_gameplay()))
-        .insert(Enemy)
+        .insert(Enemy(enemy_type))
         .insert(UnitBundle {
             stats: StatsBundle {
                 health: Health(balance::RAT_HEALTH),
@@ -52,6 +62,7 @@ fn spawn_enemy_on_character_spawned(
             ..default()
         })
         .insert(Transform::from_xyz(0.0, 100.0, -1.0))
+        .insert(HasCards(Vec::new()))
         .id();
 
     commands.entity(character).insert(Opponent(enemy));
