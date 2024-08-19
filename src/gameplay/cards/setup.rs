@@ -41,7 +41,7 @@ impl Command for SetupCardView {
             size: view::CARD_ITEM_SIZE,
             is_under_parent: true,
             color: colors::card_background_color(),
-            parent: None,
+            parent: Some(card_entity),
             ..default()
         });
 

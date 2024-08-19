@@ -35,11 +35,16 @@ fn spawn_deck(
 
     let mut tmp = commands.spawn_with_name("deck");
     let entity_command = tmp
+        .insert(GlobalTransform::default())
+        .insert(InheritedVisibility::default())
         .insert(Transform::from_translation(event.position))
         .with_children(|deck| {
             for card_type in card_types {
                 let card_entity = deck
                     .spawn_with_name(&format!("card: {}", card_type.name()))
+                    .insert(GlobalTransform::default())
+                    .insert(InheritedVisibility::default())
+                    .insert(Transform::default())
                     .insert(Card(*card_type))
                     .id();
 
