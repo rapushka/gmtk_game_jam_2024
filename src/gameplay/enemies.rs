@@ -1,7 +1,7 @@
 use crate::gameplay::character::stats::{StatsBundle, Strength};
 use crate::gameplay::character::Character;
 use crate::gameplay::enemies::ai::EnemyAiPlugin;
-use crate::gameplay::enemies::cards::spawn_enemy_cards;
+use crate::gameplay::enemies::cards::spawn_enemy_deck;
 use crate::gameplay::enemies::enemy_type::EnemyType;
 use crate::gameplay::health::components::Health;
 use crate::gameplay::health::view::HealthBarOffset;
@@ -18,9 +18,6 @@ pub struct Enemy(pub EnemyType);
 #[derive(Component)]
 pub struct HasCards(pub Vec<Entity>);
 
-#[derive(Component)]
-pub struct CardsHolder(pub Entity);
-
 pub struct EnemiesPlugin;
 
 impl Plugin for EnemiesPlugin {
@@ -29,7 +26,7 @@ impl Plugin for EnemiesPlugin {
             .add_plugins(EnemyAiPlugin)
 
             .observe(spawn_enemy_on_character_spawned)
-            .observe(spawn_enemy_cards)
+            .observe(spawn_enemy_deck)
         ;
     }
 }
@@ -67,17 +64,18 @@ fn spawn_enemy_on_character_spawned(
         .insert(Transform::from_xyz(0.0, 100.0, -1.0))
         .insert(HasCards(Vec::new()))
         .id();
-    
+
     commands.entity(character).insert(Opponent(enemy));
 
+    // TODO: REMOVE?
     // # Cards Holder
-    let card_holder = commands.spawn_with_name("cards holder")
-        .set_parent(enemy)
-        .insert(NodeBundle {
-            transform: Transform::from_xyz(0.0, view::ENEMY_CARDS_ROOT_OFFSET, 0.0),
-            ..default()
-        })
-        .id();
-
-    commands.entity(enemy).insert(CardsHolder(card_holder));
+    // let card_holder = commands.spawn_with_name("cards holder")
+    //     .set_parent(enemy)
+    //     .insert(NodeBundle {
+    //         transform: Transform::from_xyz(0.0, view::ENEMY_CARDS_ROOT_OFFSET, 0.0),
+    //         ..default()
+    //     })
+    //     .id();
+    // 
+    // commands.entity(enemy).insert(CardsHolder(card_holder));
 }
