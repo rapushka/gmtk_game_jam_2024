@@ -1,5 +1,6 @@
 use std::any::type_name;
 use bevy::ecs::observer::ObserverState;
+use bevy::ui::widget::UiImageSize;
 #[cfg(debug_assertions)]
 use bevy_editor_pls::EditorPlugin;
 use crate::gameplay::game_loop::autoplay::AutoplayState;
@@ -43,5 +44,5 @@ fn rename_observers(
     mut commands: Commands,
 ) {
     commands.entity(trigger.entity())
-        .insert(Name::new("observer"));
+        .insert(Name::new("[DEBUG] observer"));
 }

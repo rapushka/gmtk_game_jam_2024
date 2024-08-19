@@ -7,7 +7,7 @@ use crate::prelude::*;
 pub struct SpawnDeck {
     pub initial_cards: Vec<CardType>,
     pub position: Vec3,
-    pub parent: Entity,
+    pub parent: Option<Entity>,
 }
 
 #[derive(Component)]
@@ -33,8 +33,8 @@ fn spawn_deck(
     let card_types = event.initial_cards.iter();
     let mut card_entities = Vec::new();
 
-    let deck = commands.spawn_with_name("deck")
-        .set_parent(event.parent)
+    let mut tmp = commands.spawn_with_name("deck");
+    let entity_command = tmp
         .insert(Transform::from_translation(event.position))
         .with_children(|deck| {
             for card_type in card_types {
@@ -47,8 +47,12 @@ fn spawn_deck(
             }
         })
 
-        .insert(Deck(card_entities))
-        .id();
+        .insert(Deck(card_entities));
+    let deck = entity_command.id();
+
+    if let Some(parent) = event.parent {
+        entity_command.set_parent(parent);
+    }
 
     commands.add(SetupDeck(deck));
 }

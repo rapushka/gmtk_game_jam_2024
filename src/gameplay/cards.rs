@@ -48,7 +48,7 @@ fn test_cards_spawn(
 
     commands.trigger(SpawnDeck {
         initial_cards: vec![attack; 5],
-        position: Vec2::new(0.0, 0.0).extend(1.0), // TODO: padličyć pazicyju z UI,
-        parent: deck_root,
+        position: Vec2::new(465.0, -210.0).extend(1.0),
+        parent: None,
     });
 }

@@ -1,5 +1,5 @@
 use bevy::ecs::query::QueryEntityError;
-use crate::gameplay::cards::deck::SpawnDeck;
+use crate::gameplay::cards::deck::*;
 use crate::prelude::*;
 use crate::gameplay::enemies::{CardsHolder, Enemy};
 
@@ -21,7 +21,7 @@ pub fn spawn_enemy_cards(
 
     commands.trigger(SpawnDeck {
         initial_cards: enemy.0.cards(),
-        parent: card_holder.0,
         position: Vec3::new(0.0, 250.0, 1.0),
+        parent: Some(card_holder.0),
     });
 }
