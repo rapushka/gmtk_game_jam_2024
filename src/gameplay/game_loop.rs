@@ -1,4 +1,4 @@
-use crate::gameplay::cards::play_card::PlayTopCard;
+use crate::gameplay::cards::play_card::PlayTopPlayerCard;
 use crate::gameplay::game_loop::autoplay::*;
 use crate::infrastructure::app_state::*;
 use crate::prelude::*;
@@ -48,7 +48,7 @@ fn start_with_player_turn(
 fn play_top_card(
     mut commands: Commands,
 ) {
-    commands.trigger(PlayTopCard);
+    commands.trigger(PlayTopPlayerCard);
 }
 
 fn pass_turn(

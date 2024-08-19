@@ -1,3 +1,6 @@
+use crate::gameplay::cards::deck::unit_ownership::OwnedDeck;
+use crate::gameplay::cards::play_card::PlayTopCard;
+use crate::gameplay::character::Character;
 use crate::gameplay::enemies::Enemy;
 use crate::gameplay::game_loop::game_turn::GameTurn;
 use crate::prelude::*;
@@ -35,6 +38,15 @@ fn start_picking_card(
 
 fn on_enemy_thinking_ended(
     trigger: Trigger<EnemyThinking>,
+    mut commands: Commands,
+    enemies: Query<(Entity, &Opponent, &OwnedDeck), With<Enemy>>,
 ) {
     let target = trigger.event().0;
+    let (entity, opponent, deck) = enemies.get(target).expect("must be enemy!");
+
+    commands.trigger(PlayTopCard {
+        sender: entity,
+        target: opponent.0,
+        deck: deck.0,
+    });
 }
