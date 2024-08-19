@@ -14,5 +14,6 @@ pub fn spawn_enemy_deck(
         initial_cards: enemy.0.cards(),
         position: Vec3::new(0.0, 250.0, 1.0),
         parent: Some(entity),
+        owner: entity,
     });
 }

@@ -15,9 +15,6 @@ pub mod cards;
 #[derive(Component)]
 pub struct Enemy(pub EnemyType);
 
-#[derive(Component)]
-pub struct HasCards(pub Vec<Entity>);
-
 pub struct EnemiesPlugin;
 
 impl Plugin for EnemiesPlugin {
@@ -62,20 +59,7 @@ fn spawn_enemy_on_character_spawned(
             ..default()
         })
         .insert(Transform::from_xyz(0.0, 100.0, -1.0))
-        .insert(HasCards(Vec::new()))
         .id();
 
     commands.entity(character).insert(Opponent(enemy));
-
-    // TODO: REMOVE?
-    // # Cards Holder
-    // let card_holder = commands.spawn_with_name("cards holder")
-    //     .set_parent(enemy)
-    //     .insert(NodeBundle {
-    //         transform: Transform::from_xyz(0.0, view::ENEMY_CARDS_ROOT_OFFSET, 0.0),
-    //         ..default()
-    //     })
-    //     .id();
-    // 
-    // commands.entity(enemy).insert(CardsHolder(card_holder));
 }

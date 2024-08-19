@@ -12,7 +12,7 @@ impl Command for SetupDeck {
     fn apply(self, world: &mut World) {
         let deck = world.get::<Deck>(self.0)
             .expect("SetupDeck must be called only on an entity with Deck component")
-            .0.clone();
+            .cards.clone();
 
         let mut commands = world.commands();
 

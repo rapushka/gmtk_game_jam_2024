@@ -1,4 +1,3 @@
-use crate::gameplay::cards::DeckRoot;
 use crate::prelude::*;
 use crate::view::ui::create;
 use crate::view::ui::gameplay_hud::*;
@@ -43,13 +42,14 @@ fn spawn_right_panel(
     root: &mut ChildBuilder,
     assets: &Res<UiAssets>,
 ) {
-    let font = assets.font.clone();
-
     root
         .spawn_with_name("deck panel")
         .insert(NodeBundle {
             style: Style {
-                height: Val::Percent(100.0),
+                flex_direction: FlexDirection::Column,
+                align_self: AlignSelf::End,
+
+                height: Val::Percent(20.0),
                 width: Val::Px(view::DECK_PANEL_WIDTH),
 
                 padding: UiRect::all(Val::Px(20.0)),
@@ -59,9 +59,17 @@ fn spawn_right_panel(
             ..default()
         })
         .with_children(|right_dock| {
+            right_dock
+                .spawn_with_name("space")
+                .insert(NodeBundle {
+                    style: Style {
+                        height: Val::Auto,
+                        ..default()
+                    },
+                    ..default()
+                })
+            ;
             panel_background(sprite_handle, right_dock, |panel| {
-                create::list_view(panel, DeckRoot, Val::Percent(75.0));
-
                 create::horizontal_layout(panel, |horisontal_layout| {
                     create::image_button(&assets.icon_play, horisontal_layout, AutoPlayButton, 160.0);
                     create::image_button(&assets.icon_step, horisontal_layout, NextTurnButton, 80.0);

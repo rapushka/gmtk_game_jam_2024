@@ -1,17 +1,26 @@
-use crate::gameplay::cards::Card;
+use crate::gameplay::cards::order::CardOrder;
 use crate::gameplay::cards::setup::*;
 use crate::gameplay::cards::types::CardType;
+use crate::gameplay::cards::Card;
+use crate::gameplay::cards::deck::unit_ownership::OwnedDeck;
 use crate::prelude::*;
+
+pub mod unit_ownership;
 
 #[derive(Event)]
 pub struct SpawnDeck {
     pub initial_cards: Vec<CardType>,
     pub position: Vec3,
     pub parent: Option<Entity>,
+    pub owner: Entity,
 }
 
 #[derive(Component)]
-pub struct Deck(pub Vec<Entity>);
+pub struct Deck {
+    pub cards: Vec<Entity>,
+    pub top_card: Option<Entity>,
+    pub cards_counter: u8,
+}
 
 pub struct DeckPlugin;
 
@@ -34,6 +43,9 @@ fn spawn_deck(
     let mut card_entities = Vec::new();
 
     let mut tmp = commands.spawn_with_name("deck");
+    let mut top_card = None;
+    let mut cards_counter = 0;
+
     let entity_command = tmp
         .insert(GlobalTransform::default())
         .insert(InheritedVisibility::default())
@@ -46,18 +58,31 @@ fn spawn_deck(
                     .insert(InheritedVisibility::default())
                     .insert(Transform::default())
                     .insert(Card(*card_type))
+                    .insert(CardOrder(cards_counter))
                     .id();
 
                 card_entities.push(card_entity);
+
+                if top_card == None {
+                    top_card = Some(card_entity);
+                }
+
+                cards_counter += 1;
             }
         })
 
-        .insert(Deck(card_entities));
+        .insert(Deck {
+            cards: card_entities,
+            top_card,
+            cards_counter,
+        });
     let deck = entity_command.id();
 
     if let Some(parent) = event.parent {
         entity_command.set_parent(parent);
     }
+
+    commands.entity(event.owner).insert(OwnedDeck(deck));
 
     commands.add(SetupDeck(deck));
 }
