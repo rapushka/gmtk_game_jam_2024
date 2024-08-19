@@ -25,7 +25,7 @@ impl Plugin for GameLoopPlugin {
 
             .add_systems(OnEnter(AppState::in_gameplay()), start_with_player_turn)
             .add_systems(Update, (
-                play_top_card,
+                play_player_top_card,
                 reset_autoplay,
                 pass_turn,
             ).chain()
@@ -45,7 +45,7 @@ fn start_with_player_turn(
     next_state.set(GameTurn::PlayerTurn);
 }
 
-fn play_top_card(
+fn play_player_top_card(
     mut commands: Commands,
 ) {
     commands.trigger(PlayTopPlayerCard);
