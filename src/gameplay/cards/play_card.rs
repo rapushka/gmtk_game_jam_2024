@@ -1,5 +1,5 @@
 use crate::gameplay::cards::deck::unit_ownership::OwnedDeck;
-use crate::gameplay::cards::deck::Deck;
+use crate::gameplay::cards::deck::deck_component::Deck;
 use crate::gameplay::cards::play_card::invoke::{InvokeCard, InvokeCardPlugin};
 use crate::gameplay::cards::*;
 use crate::gameplay::character::Character;
@@ -56,12 +56,12 @@ fn on_player_play_card(
     _trigger: Trigger<PlayPlayerCard>,
     mut commands: Commands,
     characters: Query<(Entity, &Opponent, &OwnedDeck), With<Character>>,
-    decks: Query<&Deck>,
+    mut decks: Query<&mut Deck>,
     cards: Query<&Card>,
 ) {
     for (character, enemy, owned_deck) in characters.iter() {
-        let deck = decks.get(owned_deck.0).expect("character can't own not-deck in OwnedDeck");
-        let top_card = deck.top_card.expect("can't cast card if the deck is empty");
+        let mut deck = decks.get_mut(owned_deck.0).expect("character can't own not-deck in OwnedDeck");
+        let top_card = deck.pick_top_card().expect("TODO: handle case if the deck is empty");
         let card = cards.get(top_card).expect("top card can't be a not-card!");
 
         commands.trigger(InvokeCard {

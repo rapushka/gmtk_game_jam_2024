@@ -2,7 +2,7 @@ use crate::prelude::*;
 use bevy::ecs::world::Command;
 use bevy::prelude::Entity;
 use crate::gameplay::cards::Card;
-use crate::gameplay::cards::deck::Deck;
+use crate::gameplay::cards::deck::deck_component::Deck;
 use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
 use crate::utils::spawn::text::SpawnTextCommand;
 
@@ -12,7 +12,7 @@ impl Command for SetupDeck {
     fn apply(self, world: &mut World) {
         let deck = world.get::<Deck>(self.0)
             .expect("SetupDeck must be called only on an entity with Deck component")
-            .cards.clone();
+            .clone_cards();
 
         let mut commands = world.commands();
 

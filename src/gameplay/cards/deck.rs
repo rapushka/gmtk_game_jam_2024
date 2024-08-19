@@ -4,8 +4,10 @@ use crate::gameplay::cards::types::CardType;
 use crate::gameplay::cards::Card;
 use crate::gameplay::cards::deck::unit_ownership::OwnedDeck;
 use crate::prelude::*;
+pub use deck_component::*;
 
 pub mod unit_ownership;
+pub mod deck_component;
 
 #[derive(Event)]
 pub struct SpawnDeck {
@@ -13,13 +15,6 @@ pub struct SpawnDeck {
     pub position: Vec3,
     pub parent: Option<Entity>,
     pub owner: Entity,
-}
-
-#[derive(Component)]
-pub struct Deck {
-    pub cards: Vec<Entity>,
-    pub top_card: Option<Entity>,
-    pub cards_counter: u8,
 }
 
 pub struct DeckPlugin;
@@ -40,42 +35,30 @@ fn spawn_deck(
 ) {
     let event = trigger.event();
     let card_types = event.initial_cards.iter();
-    let mut card_entities = Vec::new();
 
     let mut tmp = commands.spawn_with_name("deck");
-    let mut top_card = None;
-    let mut cards_counter = 0;
 
+    let mut deck = Deck::new();
     let entity_command = tmp
         .insert(GlobalTransform::default())
         .insert(InheritedVisibility::default())
         .insert(Transform::from_translation(event.position))
-        .with_children(|deck| {
+        .with_children(|parent| {
             for card_type in card_types {
-                let card_entity = deck
+                let card_entity = parent
                     .spawn_with_name(&format!("card: {}", card_type.name()))
                     .insert(GlobalTransform::default())
                     .insert(InheritedVisibility::default())
                     .insert(Transform::default())
                     .insert(Card(*card_type))
-                    .insert(CardOrder(cards_counter))
+                    .insert(CardOrder(deck.card_count()))
                     .id();
 
-                card_entities.push(card_entity);
-
-                if top_card == None {
-                    top_card = Some(card_entity);
-                }
-
-                cards_counter += 1;
+                deck.add_card(card_entity);
             }
         })
 
-        .insert(Deck {
-            cards: card_entities,
-            top_card,
-            cards_counter,
-        });
+        .insert(deck);
     let deck = entity_command.id();
 
     if let Some(parent) = event.parent {
