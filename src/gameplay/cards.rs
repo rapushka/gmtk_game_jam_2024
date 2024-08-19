@@ -1,7 +1,7 @@
 use crate::gameplay::cards::deck::{DeckPlugin, SpawnDeck};
 use crate::gameplay::cards::play_card::*;
 use crate::gameplay::cards::types::CardType;
-use crate::gameplay::character::Character;
+use crate::gameplay::character::{spawn_character, Character};
 use crate::prelude::*;
 use crate::view::ui::gameplay_hud::spawn::spawn_gameplay_hud;
 
@@ -23,7 +23,7 @@ impl Plugin for CardsPlugin {
                 DeckPlugin,
             ))
 
-            .add_systems(OnEnter(AppState::in_gameplay()), test_cards_spawn.after(spawn_gameplay_hud))
+            .add_systems(OnEnter(AppState::in_gameplay()), test_cards_spawn.after(spawn_character))
         ;
     }
 }

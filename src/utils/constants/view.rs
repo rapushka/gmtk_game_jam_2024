@@ -1,7 +1,7 @@
 use crate::prelude::Vec2;
 
 // Common
-pub const DEFAULT_MOVEMENT_SPEED: f32 = 1_000.0;
+pub const DEFAULT_MOVEMENT_SPEED: f32 = 750.0;
 
 // Deck & Cards
 pub const DECK_PANEL_WIDTH: f32 = 350.0;

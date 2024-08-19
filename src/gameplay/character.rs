@@ -1,11 +1,13 @@
 use bevy::sprite::Anchor;
 use crate::gameplay::character::stats::{StatsBundle, Strength};
+use crate::gameplay::character::view::*;
 use crate::gameplay::health::components::Health;
 use crate::gameplay::health::view::HealthBarOffset;
 use crate::prelude::*;
 use crate::prelude::spawn::rounded_square::SpawnRoundedRectCommand;
 
 pub mod stats;
+mod view;
 
 #[derive(Component)]
 pub struct Character;
@@ -17,14 +19,21 @@ impl Plugin for CharactersPlugin {
         app
             .register_type::<TextureSlicer>()
 
-            .add_systems(OnEnter(AppState::in_gameplay()), spawn_character)
+            .add_systems(OnEnter(AppState::in_gameplay()), (
+                spawn_character_root,
+                spawn_character,
+            ).chain())
+
+            .add_systems(OnExit(AppState::in_gameplay()), despawn_character_root)
+
         ;
     }
 }
 
-fn spawn_character(
+pub fn spawn_character(
     mut commands: Commands,
     assets: Res<CharacterAssets>,
+    root: Res<CharacterRoot>,
 ) {
     let sprite_handle = assets.bouncer.clone();
     let character = commands.spawn_with_name("character_bouncer")
@@ -35,7 +44,7 @@ fn spawn_character(
                 health: Health(balance::BOUNCER_HEALTH),
                 strength: Strength(balance::BOUNCER_STRENGTH),
             },
-            health_bar_offset: HealthBarOffset(view::CHARACTER_HEALTH_BAR_OFFSET),
+            health_bar_offset: HealthBarOffset(constants::view::CHARACTER_HEALTH_BAR_OFFSET),
         })
         .insert(SpriteBundle {
             texture: sprite_handle,
@@ -45,6 +54,7 @@ fn spawn_character(
             },
             ..default()
         })
+        .set_parent(root.0)
         .id();
 
     // ---
