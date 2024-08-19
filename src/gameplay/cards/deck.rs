@@ -1,13 +1,14 @@
-use crate::gameplay::cards::order::CardOrder;
+use crate::gameplay::cards::deck::reordering::DeckOrderingPlugin;
+use crate::gameplay::cards::deck::unit_ownership::OwnedDeck;
 use crate::gameplay::cards::setup::*;
 use crate::gameplay::cards::types::CardType;
 use crate::gameplay::cards::Card;
-use crate::gameplay::cards::deck::unit_ownership::OwnedDeck;
 use crate::prelude::*;
 pub use deck_component::*;
 
 pub mod unit_ownership;
 pub mod deck_component;
+pub mod reordering;
 
 #[derive(Event)]
 pub struct SpawnDeck {
@@ -23,6 +24,8 @@ impl Plugin for DeckPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_event::<SpawnDeck>()
+
+            .add_plugins(DeckOrderingPlugin)
 
             .observe(spawn_deck)
         ;
@@ -51,7 +54,6 @@ fn spawn_deck(
                     .insert(InheritedVisibility::default())
                     .insert(Transform::default())
                     .insert(Card(*card_type))
-                    .insert(CardOrder(deck.card_count()))
                     .id();
 
                 deck.add_card(card_entity);
@@ -59,13 +61,13 @@ fn spawn_deck(
         })
 
         .insert(deck);
-    let deck = entity_command.id();
+    let deck_entity = entity_command.id();
 
     if let Some(parent) = event.parent {
         entity_command.set_parent(parent);
     }
 
-    commands.entity(event.owner).insert(OwnedDeck(deck));
+    commands.entity(event.owner).insert(OwnedDeck(deck_entity));
 
-    commands.add(SetupDeck(deck));
+    commands.add(SetupDeck(deck_entity));
 }

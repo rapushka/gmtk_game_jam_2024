@@ -7,6 +7,7 @@ pub const DEFAULT_MOVEMENT_SPEED: f32 = 1.0;
 pub const DECK_PANEL_WIDTH: f32 = 350.0;
 pub const CARD_NAME_FONT_SIZE: f32 = 15.0;
 pub const CARD_ITEM_SIZE: Vec2 = Vec2 { x: 200.0, y: 25.0 };
+pub const CARD_ITEM_SPACING: f32 = 35.0;
 
 // # Health Bars
 pub const CHARACTER_HEALTH_BAR_OFFSET: f32 = -20.0;

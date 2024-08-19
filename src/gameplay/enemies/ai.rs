@@ -37,5 +37,4 @@ fn on_enemy_thinking_ended(
     trigger: Trigger<EnemyThinking>,
 ) {
     let target = trigger.event().0;
-    info!("-- bro has literally 0 thoughts")
 }
