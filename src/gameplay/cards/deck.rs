@@ -52,7 +52,7 @@ fn spawn_deck(
                     .spawn_with_name(&format!("card: {}", card_type.name()))
                     .insert(GlobalTransform::default())
                     .insert(InheritedVisibility::default())
-                    .insert(Transform::default())
+                    .insert(Transform::from_translation(Vec3::Y * 720.0))
                     .insert(Card(*card_type))
                     .id();
 
