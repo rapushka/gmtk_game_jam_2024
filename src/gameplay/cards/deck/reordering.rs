@@ -1,4 +1,5 @@
 use crate::gameplay::cards::deck::Deck;
+use crate::gameplay::cards::deck::reordering::view::order_views;
 use crate::prelude::*;
 
 mod view;
@@ -19,6 +20,7 @@ impl Plugin for DeckOrderingPlugin {
             .register_type::<CardOrder>()
 
             .add_systems(Update, reorder_deck_on_change)
+            .add_systems(Update, order_views)
         ;
     }
 }

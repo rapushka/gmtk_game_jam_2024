@@ -19,8 +19,6 @@ pub struct GamePlugin;
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
-            .insert_resource(WinitSettings::desktop_app())
-
             .add_plugins((
                 ToolsPlugin,
 
