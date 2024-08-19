@@ -17,6 +17,6 @@ pub const ENEMY_CARDS_ROOT_OFFSET: f32 = 250.0;
 pub const HEALTH_FONT_SIZE: f32 = 30.0;
 
 pub mod timings {
-    pub const ENEMY_THINKING_SECONDS: f32 = 1.0;
-    pub const TURN_PASS_DELAY: f32 = 1.0;
+    pub const ENEMY_THINKING_SECONDS: f32 = 0.25;
+    pub const TURN_PASS_DELAY: f32 = 0.5;
 }
